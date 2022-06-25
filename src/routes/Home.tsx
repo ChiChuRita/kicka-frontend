@@ -1,9 +1,7 @@
+import KickaLogo from "../components/KickaLogo";
+
 const Home = () => {
-    return (
-        <div className="ranking-page">
-            <h1>Home</h1>
-        </div>
-    );
+    return <KickaLogo />;
 };
 
 export default Home;
