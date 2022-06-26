@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import AppLayout from "./AppLayout";
-import Loading from "./components/Loading";
 import Home from "./routes/Home";
 import Ranking from "./routes/Ranking";
 

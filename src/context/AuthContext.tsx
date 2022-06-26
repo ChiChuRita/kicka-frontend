@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
-//because of non-ts framework the User type is not inferrable which really sucks
+//because of non-ts framework the User type is not inferable which really sucks
 //this is a temporary workaround
 interface User {
     id: string;
@@ -12,19 +12,30 @@ interface AuthContext {
     user: User | null;
 }
 
-const authContext = createContext<AuthContext | null>(null);
+const authContext = createContext<AuthContext>({
+    isAuthenticated: false,
+    user: null,
+});
 
-export const useAuthContext = () => useContext(authContext)!;
+export const useAuth = () => useContext(authContext);
 
-type AuthProviderProps = {
+interface AuthProviderProps {
     children: React.ReactNode;
-};
+}
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState<User | null>(null);
 
-    const value: AuthContext = {
+    //temporary testing code
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            setIsAuthenticated(true);
+        }
+    }, []);
+
+    const value = {
         isAuthenticated,
         user,
     };

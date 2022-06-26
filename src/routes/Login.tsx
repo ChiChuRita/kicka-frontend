@@ -1,6 +1,6 @@
 import KickaLogo from "../components/KickaLogo";
 
-const Login = () => {
+const Login: React.FC = () => {
     return (
         <div>
             <KickaLogo />
