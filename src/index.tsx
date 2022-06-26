@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { QueryClientProvider, QueryClient } from "react-query";
 
 import App from "./App";
+import { AuthProvider } from "./context/AuthContext";
 
 import "./index.sass";
 
@@ -15,7 +16,9 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
-            <App />
+            <AuthProvider>
+                <App />
+            </AuthProvider>
         </QueryClientProvider>
     </React.StrictMode>
 );

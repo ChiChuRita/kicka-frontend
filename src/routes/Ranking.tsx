@@ -3,10 +3,10 @@ const Ranking = () => {
         <div className="flex flex-col gap-8">
             <h1 className="text-white text-6xl">Ranking</h1>
             <div className="flex justify-between">
-                <button className="rounded-md text-white bg-neutral-700 p-3">
+                <button className="rounded-md text-white bg-neutral-700 p-2">
                     Single
                 </button>
-                <button className="rounded-md text-white bg-neutral-700 p-3">
+                <button className="rounded-md text-white bg-neutral-700 p-2">
                     Sort by
                 </button>
             </div>
