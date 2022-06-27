@@ -8,17 +8,13 @@ const AppLayout = () => {
             </div>
             <div className="container flex justify-center gap-5 bg-neutral-800 p-4 rounded-t-3xl">
                 <NavLink to="/">
-                    <button className="rounded-md text-white bg-neutral-700 p-2">
-                        Home
-                    </button>
+                    <button className="button">Home</button>
                 </NavLink>
-                <button className="rounded-md text-white bg-neutral-700 p-2">
-                    Play
-                </button>
+                <NavLink to="/play">
+                    <button className="button">Play</button>
+                </NavLink>
                 <NavLink to="/ranking">
-                    <button className="rounded-md text-white bg-neutral-700 p-2">
-                        Ranking
-                    </button>
+                    <button className="button">Ranking</button>
                 </NavLink>
             </div>
         </div>
