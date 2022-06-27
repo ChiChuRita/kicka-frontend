@@ -4,6 +4,7 @@ export {};
 //this is a temporary workaround
 
 declare global {
+    //temporary user
     type User = {
         id: string;
         username: string;
