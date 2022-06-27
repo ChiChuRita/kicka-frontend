@@ -1,12 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-//because of non-ts framework the User type is not inferable which really sucks
-//this is a temporary workaround
-interface User {
-    id: string;
-    username: string;
-}
-
 interface AuthContext {
     isAuthenticated: boolean;
     user: User | null;
