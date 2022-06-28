@@ -1,4 +1,4 @@
-import KickaLogo from "../components/KickaLogo";
+import KickaLogo from "../../components/KickaLogo";
 
 const Home = () => {
     return <KickaLogo />;

@@ -2,10 +2,10 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import AppLayout from "./AppLayout";
 import ExternalRedirect from "./components/ExternalRedirect";
-import Home from "./routes/Home";
-import Login from "./routes/Login";
-import ProtectedRouter from "./routes/ProtectedRouter";
-import Ranking from "./routes/Ranking";
+import Home from "./routes/home/Home";
+import Login from "./routes/auth/Login";
+import ProtectedRouter from "./routes/auth/ProtectedRouter";
+import Ranking from "./routes/ranking/Ranking";
 
 const App: React.FC = () => (
     <BrowserRouter>

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import KickaLogo from "../components/KickaLogo";
+import KickaLogo from "../../components/KickaLogo";
 
 const Login: React.FC = () => {
     return (
