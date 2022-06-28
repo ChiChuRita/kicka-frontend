@@ -6,6 +6,8 @@ import Home from "./routes/home/Home";
 import Login from "./routes/auth/Login";
 import ProtectedRouter from "./routes/auth/ProtectedRouter";
 import Ranking from "./routes/ranking/Ranking";
+import { Success } from "./routes/auth/Success";
+import Register from "./routes/auth/Register";
 
 const App: React.FC = () => (
     <BrowserRouter>
@@ -22,6 +24,8 @@ const App: React.FC = () => (
                     element={<ExternalRedirect to="https://www.google.de" />}
                 />
             </Route>
+            <Route path="register" element={<Register />} />
+            <Route path="success" element={<Success />} />
             <Route path="*" element={<Navigate to="/" />} />
         </Routes>
     </BrowserRouter>
