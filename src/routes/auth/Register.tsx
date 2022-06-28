@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as yup from "yup";
 
 const formValidation = yup.object().shape({
-    username: yup.string().min(5).max(25).required(),
+    username: yup.string().min(5).max(32).required(),
 });
 
 const Register = () => {

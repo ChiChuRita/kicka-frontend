@@ -8,7 +8,9 @@ import { AuthProvider } from "./context/AuthContext";
 
 import "./index.sass";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: { queries: { retry: false, refetchOnMount: false } },
+});
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement

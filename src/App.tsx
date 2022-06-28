@@ -8,6 +8,7 @@ import ProtectedRouter from "./routes/auth/ProtectedRouter";
 import Ranking from "./routes/ranking/Ranking";
 import { Success } from "./routes/auth/Success";
 import Register from "./routes/auth/Register";
+import Callback from "./routes/auth/Callback";
 
 const App: React.FC = () => (
     <BrowserRouter>
@@ -21,9 +22,12 @@ const App: React.FC = () => (
                 </Route>
                 <Route
                     path="openid"
-                    element={<ExternalRedirect to="https://www.google.de" />}
+                    element={
+                        <ExternalRedirect to="http://192.168.1.163:8080/api/public/login" />
+                    }
                 />
             </Route>
+            <Route path="callback" element={<Callback />} />
             <Route path="register" element={<Register />} />
             <Route path="success" element={<Success />} />
             <Route path="*" element={<Navigate to="/" />} />
