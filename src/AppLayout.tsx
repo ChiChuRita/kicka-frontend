@@ -1,21 +1,22 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet } from "react-router-dom";
+import NavButton from "./components/NavButton";
+import { ReactComponent as RankingIcon } from "./assets/ranking_icon.svg";
+import { ReactComponent as SettingIcon } from "./assets/settings_icon.svg";
 
-const AppLayout = () => {
+const AppLayout: React.FC = () => {
     return (
-        <div className="flex flex-col justify-between md:max-w-2xl container bg-neutral-900">
-            <div className="h-max p-8">
+        <div className="flex flex-col justify-between md:max-w-2xl container bg-black">
+            <div className="h-max px-8 py-16">
                 <Outlet />
             </div>
             <div className="container flex justify-center gap-5 bg-neutral-800 p-4 rounded-t-3xl">
-                <NavLink to="/">
-                    <button className="button">Home</button>
-                </NavLink>
-                <NavLink to="/play">
-                    <button className="button">Play</button>
-                </NavLink>
-                <NavLink to="/ranking">
-                    <button className="button">Ranking</button>
-                </NavLink>
+                <NavButton to="ranking">
+                    <RankingIcon />
+                </NavButton>
+                <NavButton to="play">Play</NavButton>
+                <NavButton to="">
+                    <SettingIcon />
+                </NavButton>
             </div>
         </div>
     );

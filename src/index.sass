@@ -13,10 +13,15 @@
   font-family: 'Lato', sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
+  -webkit-tap-highlight-color: transparent
   background-color: #000000
   color: white
   font-size: 18px
 
+@layer base
+  h1
+    font-size: 32px
+
 @layer components
   .button
-    @apply rounded-md text-white bg-neutral-700 py-2 px-4
+    @apply rounded-md text-white bg-neutral-700 py-2 px-4 min-h-[42px] min-w-[42px]
