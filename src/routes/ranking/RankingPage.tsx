@@ -1,7 +1,11 @@
-import { ReactComponent as Arrow } from "../../assets/arrow.svg";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+
 import RankingTable from "./RankingTable";
 
 const RankingPage = () => {
+    const [duo, setDuo] = useState(false);
+
     return (
         <div className="flex flex-col gap-4">
             <h1>Ranking</h1>
