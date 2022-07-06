@@ -8,6 +8,7 @@ const RankingTable = () => {
             <RankingElement />
             <RankingElement />
             <RankingElement />
+            <RankingElement />
         </div>
     );
 };
