@@ -15,11 +15,11 @@ const App = () => {
                     <Route index element={<HomePage />} />
                     <Route path="ranking" element={<RankingPage />} />
                     <Route path="login" element={<LoginPage />} />
+                    <Route element={<ProtectedRoute />}>
+                        <Route path="play" element={<div>Play</div>} />
+                    </Route>
+                    <Route path="*" element={<Navigate to="/" />} />
                 </Route>
-                <Route element={<ProtectedRoute />}>
-                    <Route path="play" element={<div>Play</div>} />
-                </Route>
-                <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </BrowserRouter>
     );
