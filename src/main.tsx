@@ -11,7 +11,9 @@ import { AuthProvider } from "./context/AuthContext";
 axios.defaults.baseURL =
     import.meta.env.VITE_API_URL || "http://localhost:8080/api";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: { queries: { retryOnMount: false } },
+});
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>

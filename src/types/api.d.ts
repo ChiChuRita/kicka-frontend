@@ -9,3 +9,8 @@ interface RankingElementData {
 interface RankingData {
     ranking: RankingElementData[];
 }
+
+interface AuthData {
+    isRegistered: boolean;
+    token: string;
+}
