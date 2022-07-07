@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import ModeSelector from "./ModeSelector";
 
 import RankingTable from "./RankingTable";
 
 const RankingPage = () => {
-    const [duo, setDuo] = useState(false);
+    const [mode, setMode] = useState("single");
 
     return (
         <div className="flex flex-col gap-4">
-            <h1>Ranking</h1>
+            <h1>Rankings</h1>
             <div className="flex flex-row justify-between">
-                <div className="flex flex-row">
-                    <button className="button">Single</button>
-                    <button className="button">Duo</button>
-                </div>
+                <ModeSelector
+                    mode={mode}
+                    onChange={(mode) => {
+                        setMode(mode);
+                    }}
+                />
                 <button className="button">
                     <span>Sort by</span>
                 </button>
