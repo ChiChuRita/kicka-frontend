@@ -6,6 +6,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import HomePage from "./routes/home/HomePage";
 import RankingPage from "./routes/ranking/RankingPage";
 import LoginPage from "./routes/auth/LoginPage";
+import AuthPage from "./routes/auth/AuthPage";
 
 const App = () => {
     return (
@@ -18,6 +19,7 @@ const App = () => {
                     <Route element={<ProtectedRoute />}>
                         <Route path="play" element={<div>Play</div>} />
                     </Route>
+                    <Route path="/auth" element={<AuthPage />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Route>
             </Routes>

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import { Navigate, useSearchParams } from "react-router-dom";
 
-export const AuthPage = () => {
+const AuthPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const code = searchParams.get("code");
@@ -21,3 +21,5 @@ export const AuthPage = () => {
 
     return <div>{JSON.stringify(data)}</div>;
 };
+
+export default AuthPage;
