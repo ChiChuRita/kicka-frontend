@@ -8,6 +8,7 @@ interface RankingElementData {
 
 interface RankingData {
     ranking: RankingElementData[];
+    lastQuery: number;
 }
 
 interface AuthData {
