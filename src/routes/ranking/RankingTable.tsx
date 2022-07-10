@@ -7,7 +7,7 @@ import { useInfiniteQuery } from "react-query";
 const RankingTable = () => {
     // temp link to the api for now
     const apiLink =
-        "https://randomuser.me/api/?results=20&seed=dc1b6de4a7bb98a7&page=";
+        "https://randomuser.me/api/?results=10&seed=dc1b6de4a7bb98a7&page=";
     const fetchData = ({ pageParam = 1 }): Promise<RankingData> => {
         return axios.get(apiLink + pageParam).then((res) => {
             const data = res.data.results.map((user: any) => {
@@ -42,7 +42,6 @@ const RankingTable = () => {
         <p>Error: {(error as Error).message}</p>
     ) : (
         <>
-            {console.log(data)}
             {data?.pages.map((group, index) => (
                 <div key={index}>
                     {group.ranking.map((rankingElement, rankingIndex) => (

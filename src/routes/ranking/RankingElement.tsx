@@ -2,11 +2,14 @@ import React from "react";
 
 interface RankingProps {
     rankingElement: RankingElementData;
-    index: number;
 }
 
-const RankingElement = ({ rankingElement, index }: RankingProps) => {
-    return <div key={index}>{rankingElement.username}</div>;
+const RankingElement = ({ rankingElement }: RankingProps) => {
+    return (
+        <div className="flex rounded-xl py-2 px-4 my-3 bg-neutral-700">
+            {rankingElement.username}
+        </div>
+    );
 };
 
 export default RankingElement;
