@@ -4,7 +4,6 @@ const LoginPage = () => {
             <button
                 className="button"
                 onClick={() => {
-                    console.log(import.meta.env.VITE_API_URL + "/public/login");
                     window.location.href =
                         import.meta.env.VITE_API_URL + "/public/login";
                 }}
