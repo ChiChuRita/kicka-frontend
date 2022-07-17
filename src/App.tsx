@@ -7,6 +7,7 @@ import HomePage from "./routes/home/HomePage";
 import RankingPage from "./routes/ranking/RankingPage";
 import LoginPage from "./routes/auth/LoginPage";
 import AuthPage from "./routes/auth/AuthPage";
+import DeubgPage from "./routes/debug/DeubgPage";
 
 const App = () => {
     return (
@@ -20,6 +21,7 @@ const App = () => {
                         <Route path="play" element={<div>Play</div>} />
                     </Route>
                     <Route path="/auth" element={<AuthPage />} />
+                    <Route path="/debug" element={<DeubgPage />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Route>
             </Routes>
