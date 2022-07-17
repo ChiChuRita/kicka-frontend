@@ -21,14 +21,14 @@ jobs:
               run: yarn
 
             # Build project
-            - name: build project
+            - name: Build project
               run: yarn build
 
-            - name: Deploy to Server 1
+            - name: Deploy to Server
               uses: easingthemes/ssh-deploy@main
               env:
                   SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
                   REMOTE_HOST: ${{ secrets.HOST_DNS }}
                   REMOTE_USER: ${{ secrets.USERNAME }}
-                  SOURCE: /dist
+                  SOURCE: dist
                   TARGET: ${{ secrets.TARGET_DIR }}
