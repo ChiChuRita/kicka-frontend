@@ -1,37 +1,34 @@
 name: CI/CD
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-    
-  workflow_dispatch:
-  
+    push:
+        branches: ["main"]
+    pull_request:
+        branches: ["main"]
+
+    workflow_dispatch:
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      - uses: actions/checkout@v3
-      
-      # Install dependencies
-      - name: Install dependencies
-        run: yarn
+        # Steps represent a sequence of tasks that will be executed as part of the job
+        steps:
+            - uses: actions/checkout@v3
 
-      # Build project
-      - name: build project
-        run: yarn build
-      
-      # Setup AWS
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-central-1
-      
-      # Upload to S3
-      - name: Copy files to the production website with the AWS CLI
-        run: aws s3 sync ./dist s3://app.hpi-kicka.de
+            # Install dependencies
+            - name: Install dependencies
+              run: yarn
+
+            # Build project
+            - name: build project
+              run: yarn build
+
+            - name: Deploy to Server 1
+
+    uses: easingthemes/ssh-deploy@main
+    env:
+        SSH_PRIVATE_KEY: ${ { secrets.EC2_SSH_KEY }}
+        REMOTE_HOST: ${ { secrets.HOST_DNS }}
+        REMOTE_USER: ${ { secrets.USERNAME }}
+        TARGET: ${ { secrets.TARGET_DIR }}
