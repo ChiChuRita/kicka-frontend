@@ -9,7 +9,7 @@ const HomePage = () => {
         <div>
             <KickaLogo />
             {searchParams.get("login") ? "login" : "home"}
-            <div>Testing some stuff...</div>
+            <div>Testing some stuff....</div>
         </div>
     );
 };
