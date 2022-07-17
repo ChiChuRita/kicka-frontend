@@ -8,7 +8,6 @@ const HomePage = () => {
     return (
         <div>
             <KickaLogo />
-            {searchParams.get("login") ? "login" : "home"}
         </div>
     );
 };

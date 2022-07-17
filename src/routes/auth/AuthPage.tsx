@@ -9,17 +9,16 @@ const AuthPage = () => {
     const state = searchParams.get("state");
     const sessionState = searchParams.get("session_state");
 
-    const { isLoading, data, isError } = useQuery("authCallback", () =>
-        axios.get<AuthData>("/public/callback", {
-            params: { code, state, sessionState },
-        })
+    const { isLoading, data, isError } = useQuery(
+        "authCallback",
+        () =>
+            axios.get<AuthData>("/public/callback", {
+                params: { code, state, sessionState },
+            }),
+        { retry: false }
     );
 
-    if (isError) return <Navigate to="/" />;
-
-    if (isLoading) return <div>Loading...</div>;
-
-    return <div>{JSON.stringify(data)}</div>;
+    return <div>{JSON.stringify(data?.data)} Alright...</div>;
 };
 
 export default AuthPage;
