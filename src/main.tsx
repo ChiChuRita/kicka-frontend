@@ -8,8 +8,9 @@ import App from "./App";
 import "./index.sass";
 import { AuthProvider } from "./context/AuthContext";
 
-axios.defaults.baseURL =
-    import.meta.env.VITE_API_URL || "http://localhost:8080/api";
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost";
+
+console.log(import.meta.env.VITE_API_URL);
 
 const queryClient = new QueryClient({
     defaultOptions: { queries: { retryOnMount: false } },
