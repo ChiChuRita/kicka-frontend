@@ -8,7 +8,7 @@ const RankingPage = () => {
     const [mode, setMode] = useState("single");
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 grow">
             <h1>Rankings</h1>
             <div className="flex flex-row justify-between">
                 <ModeSelector
@@ -21,6 +21,7 @@ const RankingPage = () => {
                     <span>Sort by</span>
                 </button>
             </div>
+
             <RankingTable />
         </div>
     );

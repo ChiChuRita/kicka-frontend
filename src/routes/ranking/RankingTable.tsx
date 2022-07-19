@@ -1,11 +1,13 @@
 import { AuthProvider } from "../../context/AuthContext";
 import RankingElement from "./RankingElement";
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useInfiniteQuery } from "react-query";
+import { nullable } from "zod";
 
 const RankingTable = () => {
     // temp link to the api for now
+    const usersPerQuery = 10;
     const apiLink =
         "https://randomuser.me/api/?results=10&seed=dc1b6de4a7bb98a7&page=";
     const fetchData = ({ pageParam = 1 }): Promise<RankingData> => {
@@ -22,6 +24,8 @@ const RankingTable = () => {
             return { ranking: data, lastQuery: pageParam } as RankingData;
         });
     };
+    const loadMoreRef = React.useRef<HTMLButtonElement>(null);
+    loadMoreRef.current?.click();
     const {
         data,
         fetchNextPage,
@@ -30,7 +34,7 @@ const RankingTable = () => {
         isFetching,
         isFetchingNextPage,
         status,
-    } = useInfiniteQuery(["rankingData"], fetchData, {
+    } = useInfiniteQuery("rankingData", fetchData, {
         getNextPageParam: (lastPage, pages) => {
             return lastPage.lastQuery + 1;
         },
@@ -41,19 +45,25 @@ const RankingTable = () => {
     ) : status === "error" ? (
         <p>Error: {(error as Error).message}</p>
     ) : (
-        <>
+        <div className="scroll-smooth overflow-y-auto grow h-0">
             {data?.pages.map((group, index) => (
-                <div key={index}>
+                <>
                     {group.ranking.map((rankingElement, rankingIndex) => (
                         <RankingElement
                             rankingElement={rankingElement}
                             key={rankingIndex}
+                            index={
+                                rankingIndex +
+                                (group.lastQuery - 1) * usersPerQuery +
+                                1
+                            }
                         />
                     ))}
-                </div>
+                </>
             ))}
             <div>
                 <button
+                    ref={loadMoreRef}
                     onClick={() => fetchNextPage()}
                     disabled={!hasNextPage || isFetchingNextPage}
                 >
@@ -67,7 +77,7 @@ const RankingTable = () => {
             <div>
                 {isFetching && !isFetchingNextPage ? "Fetching..." : null}
             </div>
-        </>
+        </div>
     );
 };
 
