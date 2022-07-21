@@ -61,7 +61,7 @@ const RankingTable = () => {
     ) : (
         <div className="scroll-smooth overflow-y-auto grow h-0">
             {data?.pages.map((group, index) => (
-                <>
+                <div key={index}>
                     {group.ranking.map((rankingElement, rankingIndex) => (
                         <RankingElement
                             rankingElement={rankingElement}
@@ -73,7 +73,7 @@ const RankingTable = () => {
                             }
                         />
                     ))}
-                </>
+                </div>
             ))}
             <div>
                 <button
