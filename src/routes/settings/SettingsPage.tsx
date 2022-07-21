@@ -1,9 +1,18 @@
+import axios from "axios";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 const SettingsPage = () => {
-    const { user, logout } = useAuth();
+    const { token, logout } = useAuth();
     const navigate = useNavigate();
+    const { data } = useQuery(
+        "user",
+        () => {
+            return axios.get<UserData>("/private/user");
+        },
+        { cacheTime: 0 }
+    );
 
     const onLogout = () => {
         logout();
@@ -24,6 +33,10 @@ const SettingsPage = () => {
             <button className="button" onClick={onDelete}>
                 Delete Account
             </button>
+            <div className="w-32">
+                User Info:
+                <pre>{JSON.stringify(data?.data, null, 2)}</pre>
+            </div>
         </div>
     );
 };

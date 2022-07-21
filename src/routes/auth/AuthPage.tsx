@@ -16,7 +16,11 @@ const AuthPage = () => {
     const state = searchParams.get("state");
     const sessionState = searchParams.get("session_state");
 
-    const { data, isError, error } = useQuery(
+    const {
+        data: response,
+        isError,
+        error,
+    } = useQuery(
         "authCallback",
         () =>
             axios.get<AuthData>("/public/callback", {
@@ -34,17 +38,19 @@ const AuthPage = () => {
         if (isAuthenticated) navigate("/");
     }, [isAuthenticated]);
 
-    if (isError) {
-        console.error(error);
-        navigate("/login");
-    }
+    useEffect(() => {
+        if (isError) console.log(error);
+    });
 
-    if (data) {
-        if (data.data.isRegistered) {
-            login(data.data.token);
-        } else if (data.data.isRegistered === false) {
-            return <RegisterForm registerToken={data.data.token} />;
+    useEffect(() => {
+        if (response?.data.isRegistered) {
+            login(response.data.token);
+            navigate("/");
         }
+    }, [response]);
+
+    if (response?.data.isRegistered === false) {
+        return <RegisterForm registerToken={response.data.token} />;
     }
 
     return <div>Authenticating...</div>;

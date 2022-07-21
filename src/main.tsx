@@ -12,9 +12,7 @@ axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost";
 
 console.log(import.meta.env.VITE_API_URL);
 
-const queryClient = new QueryClient({
-    defaultOptions: { queries: { retryOnMount: false } },
-});
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>

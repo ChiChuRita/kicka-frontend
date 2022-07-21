@@ -1,8 +1,9 @@
+import axios from "axios";
 import { createContext, useContext, useState, useEffect } from "react";
 
 const authContext = createContext({
     isAuthenticated: false,
-    user: null,
+    token: "",
     login: (token: string) => {},
     logout: () => {},
 });
@@ -15,7 +16,7 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [user, setUser] = useState<any>(null);
+    const [token, setToken] = useState<string>("");
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -27,16 +28,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const login = (token: string) => {
         setIsAuthenticated(true);
         localStorage.setItem("token", token);
-        setUser(token);
+        axios.defaults.headers.common["Authorization"] = token;
+        setToken(token);
     };
 
     const logout = () => {
         setIsAuthenticated(false);
-        setUser(null);
+        setToken("");
+        axios.defaults.headers.common["Authorization"] = "";
         localStorage.removeItem("token");
     };
 
-    const value = { isAuthenticated, user, login, logout };
+    const value = { isAuthenticated, token, login, logout };
 
     return (
         <authContext.Provider value={value}>{children}</authContext.Provider>
