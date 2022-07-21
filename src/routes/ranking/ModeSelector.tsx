@@ -2,18 +2,11 @@ import React from "react";
 
 import singleIcon from "../../assets/single.svg";
 import duoIcon from "../../assets/duo.svg";
-import { motion, AnimateSharedLayout } from "framer-motion";
 
 interface ModeSelectorProps {
     onChange: (mode: string) => void;
     mode: string;
 }
-
-const spring = {
-    type: "spring",
-    stiffness: 700,
-    damping: 30,
-};
 
 const ModeSelector: React.FC<ModeSelectorProps> = ({ mode, onChange }) => {
     return (

@@ -1,4 +1,3 @@
-import React from "react";
 import eloLogo from "../../assets/elo.svg";
 
 interface RankingProps {

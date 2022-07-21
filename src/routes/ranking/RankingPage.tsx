@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
 import ModeSelector from "./ModeSelector";
 
 import RankingTable from "./RankingTable";

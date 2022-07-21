@@ -1,6 +1,5 @@
-import { AuthProvider } from "../../context/AuthContext";
 import RankingElement from "./RankingElement";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useInfiniteQuery } from "react-query";
 
