@@ -14,6 +14,7 @@ const AuthPage = () => {
         () =>
             axios.get<AuthData>("/public/callback", {
                 params: { code, state, sessionState },
+                withCredentials: true,
             }),
         { retry: false }
     );
