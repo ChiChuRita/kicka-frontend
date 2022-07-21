@@ -1,6 +1,6 @@
 import { AuthProvider } from "../../context/AuthContext";
 import RankingElement from "./RankingElement";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useInfiniteQuery } from "react-query";
 import { nullable } from "zod";
@@ -24,8 +24,7 @@ const RankingTable = () => {
             return { ranking: data, lastQuery: pageParam } as RankingData;
         });
     };
-    const loadMoreRef = React.useRef<HTMLButtonElement>(null);
-    loadMoreRef.current?.click();
+
     const {
         data,
         fetchNextPage,
@@ -39,6 +38,23 @@ const RankingTable = () => {
             return lastPage.lastQuery + 1;
         },
     });
+
+    const loadMoreRef = React.useRef<HTMLButtonElement>(null);
+
+    useEffect(() => {
+        if (!hasNextPage) return;
+        const observer = new IntersectionObserver(
+            (entries) =>
+                entries.forEach(
+                    (entry) => entry.isIntersecting && fetchNextPage()
+                ),
+            { root: null, rootMargin: "0px", threshold: 0.1 }
+        );
+        const el = loadMoreRef && loadMoreRef.current;
+
+        if (!el) return;
+        observer.observe(el);
+    }, [loadMoreRef.current, hasNextPage]);
 
     return status === "loading" ? (
         <p>Loading...</p>
