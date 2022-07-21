@@ -26,12 +26,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const login = (token: string) => {
         setIsAuthenticated(true);
+        localStorage.setItem("token", token);
         setUser(token);
     };
 
     const logout = () => {
         setIsAuthenticated(false);
         setUser(null);
+        localStorage.removeItem("token");
     };
 
     const value = { isAuthenticated, user, login, logout };

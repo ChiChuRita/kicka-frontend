@@ -1,4 +1,4 @@
-import { Navigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useMutation, useQuery } from "react-query";
 
 import axios from "axios";
@@ -10,14 +10,13 @@ import RegisterForm from "./RegisterForm";
 const AuthPage = () => {
     const { isAuthenticated, login } = useAuth();
     const [searchParams] = useSearchParams();
-
-    if (isAuthenticated) return <Navigate to="/" />;
+    const navigate = useNavigate();
 
     const code = searchParams.get("code");
     const state = searchParams.get("state");
     const sessionState = searchParams.get("session_state");
 
-    const { isLoading, data, isError, error } = useQuery(
+    const { data, isError, error } = useQuery(
         "authCallback",
         () =>
             axios.get<AuthData>("/public/callback", {
@@ -31,15 +30,18 @@ const AuthPage = () => {
         }
     );
 
+    useEffect(() => {
+        if (isAuthenticated) navigate("/");
+    }, [isAuthenticated]);
+
     if (isError) {
         console.error(error);
-        return <Navigate to="/login" />;
+        navigate("/login");
     }
 
     if (data) {
         if (data.data.isRegistered) {
             login(data.data.token);
-            return <Navigate to="/" />;
         } else if (data.data.isRegistered === false) {
             return <RegisterForm registerToken={data.data.token} />;
         }

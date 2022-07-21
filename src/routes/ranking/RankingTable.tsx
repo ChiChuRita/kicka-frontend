@@ -3,7 +3,6 @@ import RankingElement from "./RankingElement";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useInfiniteQuery } from "react-query";
-import { nullable } from "zod";
 
 const RankingTable = () => {
     // temp link to the api for now
