@@ -10,11 +10,11 @@ const AppLayout: React.FC = () => {
                 <Outlet />
             </div>
             <div className="container flex justify-center gap-5 bg-neutral-800 p-4 rounded-t-3xl">
-                <NavButton to="ranking">
+                <NavButton to="/ranking">
                     <RankingIcon />
                 </NavButton>
                 <NavButton to="/play">Play</NavButton>
-                <NavButton to="setting">
+                <NavButton to="/settings">
                     <SettingIcon />
                 </NavButton>
             </div>

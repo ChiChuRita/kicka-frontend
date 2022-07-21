@@ -8,6 +8,8 @@ import RankingPage from "./routes/ranking/RankingPage";
 import LoginPage from "./routes/auth/LoginPage";
 import AuthPage from "./routes/auth/AuthPage";
 import DeubgPage from "./routes/debug/DeubgPage";
+import SettingsPage from "./routes/settings/SettingsPage";
+import PlayPage from "./routes/play/PlayPage";
 
 const App = () => {
     return (
@@ -18,7 +20,8 @@ const App = () => {
                     <Route path="ranking" element={<RankingPage />} />
                     <Route path="login" element={<LoginPage />} />
                     <Route element={<ProtectedRoute />}>
-                        <Route path="play" element={<div>Play</div>} />
+                        <Route path="play" element={<PlayPage />} />
+                        <Route path="settings" element={<SettingsPage />} />
                     </Route>
                     <Route path="/auth" element={<AuthPage />} />
                     <Route path="/debug" element={<DeubgPage />} />
