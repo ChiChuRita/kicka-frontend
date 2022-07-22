@@ -10,13 +10,13 @@ const RankingTable = () => {
     const fetchData = ({ pageParam = 0 }): Promise<RankingData> => {
         return axios.get(apiLink, { params: { q: pageParam } }).then((res) => {
             console.log(res.data);
-            const data = res.data.ranking.map((user: any) => {
+            const data = res.data.map((user: any) => {
                 return {
-                    username: user.name.first,
-                    elo: user.location.street.number,
-                    ranking: user.location.street.number,
-                    games: user.location.street.number,
-                    wins: user.location.street.number,
+                    username: user.username,
+                    elo: user.elo_score,
+                    ranking: user.position,
+                    games: user.games_played,
+                    wins: user.wins,
                 } as RankingElementData;
             });
             return { ranking: data, lastQuery: pageParam } as RankingData;
@@ -66,11 +66,6 @@ const RankingTable = () => {
                         <RankingElement
                             rankingElement={rankingElement}
                             key={rankingIndex}
-                            index={
-                                rankingIndex +
-                                (group.lastQuery - 1) * usersPerQuery +
-                                1
-                            }
                         />
                     ))}
                 </div>

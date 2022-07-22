@@ -5,11 +5,13 @@ interface RankingProps {
     index: number;
 }
 
-const RankingElement = ({ rankingElement, index }: RankingProps) => {
+const RankingElement = ({ rankingElement }: RankingProps) => {
     return (
         <div className="flex flex-row rounded-xl py-2 px-4 my-3 bg-neutral-800 justify-between">
             <div className="flex items-center">
-                <div className="rank pr-2 text-xl">{index}.</div>
+                <div className="rank pr-2 text-xl">
+                    {rankingElement.ranking}.
+                </div>
                 <div className="username text-xl">
                     {rankingElement.username}
                 </div>
