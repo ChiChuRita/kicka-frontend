@@ -12,5 +12,3 @@ export const useDebounce = (value: string, delay = 500) => {
     }, [value, delay]);
     return debouncedValue;
 };
-
-export default useDebounce;

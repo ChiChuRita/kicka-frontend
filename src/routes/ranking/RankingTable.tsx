@@ -6,11 +6,11 @@ import { useInfiniteQuery } from "react-query";
 const RankingTable = () => {
     // temp link to the api for now
     const usersPerQuery = 10;
-    const apiLink =
-        "https://randomuser.me/api/?results=10&seed=dc1b6de4a7bb98a7&page=";
-    const fetchData = ({ pageParam = 1 }): Promise<RankingData> => {
-        return axios.get(apiLink + pageParam).then((res) => {
-            const data = res.data.results.map((user: any) => {
+    const apiLink = "/public/ranking/single";
+    const fetchData = ({ pageParam = 0 }): Promise<RankingData> => {
+        return axios.get(apiLink, { params: { q: pageParam } }).then((res) => {
+            console.log(res.data);
+            const data = res.data.ranking.map((user: any) => {
                 return {
                     username: user.name.first,
                     elo: user.location.street.number,
