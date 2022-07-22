@@ -1,6 +1,5 @@
 import axios from "axios";
 import { createContext, useContext, useState, useEffect } from "react";
-import { isExpired } from "react-jwt";
 import { useQueryClient } from "react-query";
 
 const authContext = createContext({
@@ -30,18 +29,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             login(token);
         }
         setIsLoading(false);
-    }, []);
-
-    useEffect(() => {
-        const interceptor = axios.interceptors.request.use((req) => {
-            if (isAuthenticated && isExpired(token)) {
-                logout();
-            }
-            return req;
-        });
-        return () => {
-            axios.interceptors.response.eject(interceptor);
-        };
     }, []);
 
     const login = (token: string) => {
