@@ -2,7 +2,6 @@ import eloLogo from "../../assets/elo.svg";
 
 interface RankingProps {
     rankingElement: RankingElementData;
-    index: number;
 }
 
 const RankingElement = ({ rankingElement }: RankingProps) => {
