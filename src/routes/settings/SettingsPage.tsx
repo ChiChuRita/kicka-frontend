@@ -25,7 +25,7 @@ const SettingsPage = () => {
     };
 
     return (
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col grow gap-5">
             <h1>Settings</h1>
             <button className="button" onClick={onLogout}>
                 Logout
@@ -33,9 +33,8 @@ const SettingsPage = () => {
             <button className="button" onClick={onDelete}>
                 Delete Account
             </button>
-            <div className="w-32">
-                User Info:
-                <pre>{JSON.stringify(data?.data, null, 2)}</pre>
+            <div>
+                <span>Username: {data?.data.username}</span>
             </div>
         </div>
     );
