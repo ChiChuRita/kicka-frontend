@@ -13,7 +13,7 @@ const AppLayout: React.FC = () => {
                 <NavButton to="/ranking">
                     <RankingIcon />
                 </NavButton>
-                <NavButton to="/Home">Home</NavButton>
+                <NavButton to="/">Home</NavButton>
                 <NavButton to="/settings">
                     <SettingIcon />
                 </NavButton>

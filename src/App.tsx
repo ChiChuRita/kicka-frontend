@@ -16,10 +16,10 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route element={<AppLayout />}>
-                    <Route index element={<HomePage />} />
                     <Route path="ranking" element={<RankingPage />} />
                     <Route path="login" element={<LoginPage />} />
                     <Route element={<ProtectedRoute />}>
+                        <Route index element={<HomePage />} />
                         <Route path="play" element={<PlayPage />} />
                         <Route path="settings" element={<SettingsPage />} />
                     </Route>

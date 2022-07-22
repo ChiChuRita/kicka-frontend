@@ -24,7 +24,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ registerToken }) => {
         <Formik
             initialValues={{ username: "" }}
             validationSchema={yup.object({
-                username: yup.string().min(4).max(19).required(),
+                username: yup.string().min(5).max(20).required(),
             })}
             onSubmit={async ({ username }, { setSubmitting }) => {
                 setSubmitting(true);
@@ -38,10 +38,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ registerToken }) => {
                 setSubmitting(false);
             }}
         >
-            <Form className="flex flex-col gap-5">
+            <Form className="flex flex-col grow gap-5">
+                <label>Username</label>
                 <Field name="username" type="text" />
                 <ErrorMessage name="username" />
-                <button type="submit" className="button">
+                <button type="submit" className="button bg-primary-action">
                     Register
                 </button>
             </Form>
