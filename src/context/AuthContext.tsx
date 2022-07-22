@@ -1,5 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useState, useEffect } from "react";
+import { isExpired } from "react-jwt";
+import { useQueryClient } from "react-query";
 
 const authContext = createContext({
     isAuthenticated: false,
@@ -19,6 +21,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [token, setToken] = useState<string>("");
 
+    const queryClient = useQueryClient();
+
     useEffect(() => {
         setIsLoading(true);
         const token = localStorage.getItem("token");
@@ -29,9 +33,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        const interceptor = axios.interceptors.response.use((res) => {
-            //TODO implement interceptor
-            return res;
+        const interceptor = axios.interceptors.request.use((req) => {
+            if (isAuthenticated && isExpired(token)) {
+                logout();
+            }
+            return req;
         });
         return () => {
             axios.interceptors.response.eject(interceptor);
@@ -50,6 +56,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setToken("");
         axios.defaults.headers.common["Authorization"] = "";
         localStorage.removeItem("token");
+        queryClient.clear();
     };
 
     const value = { isAuthenticated, token, login, logout };

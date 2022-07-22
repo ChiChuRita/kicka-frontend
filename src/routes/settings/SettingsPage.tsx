@@ -1,25 +1,26 @@
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useQuery, useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 const SettingsPage = () => {
     const { token, logout } = useAuth();
     const navigate = useNavigate();
-    const { data, isLoading, isSuccess } = useQuery(
-        "user",
-        () => {
-            return axios.get<UserData>("/private/user");
-        },
-        { cacheTime: 0 }
-    );
+    const { data, isLoading } = useQuery("user", () => {
+        return axios.get<UserData>("/private/user");
+    });
+
+    const { mutateAsync } = useMutation(() => {
+        return axios.delete("/private/user");
+    });
 
     const onLogout = () => {
         logout();
         navigate("/");
     };
 
-    const onDelete = () => {
+    const onDelete = async () => {
+        await mutateAsync();
         logout();
         navigate("/");
     };
