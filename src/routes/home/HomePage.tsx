@@ -1,20 +1,20 @@
 import axios from "axios";
-import { useEffect } from "react";
-import { useQueries, useQuery } from "react-query";
-import { useSearchParams } from "react-router-dom";
+import { useQuery } from "react-query";
+import { Link } from "react-router-dom";
 import KickaLogo from "../../components/KickaLogo";
 
 const HomePage = () => {
-    const [searchParams, setSearchParams] = useSearchParams();
-
     const { data, isLoading } = useQuery("user", () => {
         return axios.get<UserData>("private/user");
     });
 
     return (
-        <div>
+        <div className="flex flex-col grow gap-5">
             <KickaLogo />
             <h2>Welcome back! {data?.data.username}</h2>
+            <Link to="play">
+                <button className="button bg-primary-action">Play</button>
+            </Link>
         </div>
     );
 };

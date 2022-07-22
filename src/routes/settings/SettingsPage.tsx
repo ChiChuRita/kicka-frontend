@@ -31,7 +31,7 @@ const SettingsPage = () => {
             <button className="button" onClick={onLogout}>
                 Logout
             </button>
-            <button className="button" onClick={onDelete}>
+            <button className="button bg-primary-action" onClick={onDelete}>
                 Delete Account
             </button>
             {!isLoading ? (
