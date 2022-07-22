@@ -25,11 +25,21 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     }, []);
 
+    useEffect(() => {
+        const interceptor = axios.interceptors.response.use((res) => {
+            //TODO implement interceptor
+            return res;
+        });
+        return () => {
+            axios.interceptors.response.eject(interceptor);
+        };
+    }, []);
+
     const login = (token: string) => {
         setIsAuthenticated(true);
+        setToken(token);
         localStorage.setItem("token", token);
         axios.defaults.headers.common["Authorization"] = token;
-        setToken(token);
     };
 
     const logout = () => {

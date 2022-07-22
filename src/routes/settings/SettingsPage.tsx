@@ -6,7 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 const SettingsPage = () => {
     const { token, logout } = useAuth();
     const navigate = useNavigate();
-    const { data } = useQuery(
+    const { data, isLoading, isSuccess } = useQuery(
         "user",
         () => {
             return axios.get<UserData>("/private/user");
@@ -33,9 +33,13 @@ const SettingsPage = () => {
             <button className="button" onClick={onDelete}>
                 Delete Account
             </button>
-            <div>
-                <span>Username: {data?.data.username}</span>
-            </div>
+            {!isLoading ? (
+                <div>
+                    <span>Username: {data?.data.username}</span>
+                </div>
+            ) : (
+                <div>Loading...</div>
+            )}
         </div>
     );
 };
