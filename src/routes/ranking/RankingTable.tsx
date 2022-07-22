@@ -33,7 +33,7 @@ const RankingTable = () => {
         status,
     } = useInfiniteQuery("rankingData", fetchData, {
         getNextPageParam: (lastPage, pages) => {
-            return lastPage.lastQuery + 1;
+            return lastPage.lastQuery + 10;
         },
     });
 
