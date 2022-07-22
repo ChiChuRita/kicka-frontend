@@ -15,14 +15,17 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+    const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [token, setToken] = useState<string>("");
 
     useEffect(() => {
+        setIsLoading(true);
         const token = localStorage.getItem("token");
         if (token) {
             login(token);
         }
+        setIsLoading(false);
     }, []);
 
     useEffect(() => {
@@ -51,7 +54,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const value = { isAuthenticated, token, login, logout };
 
-    return (
+    return isLoading ? (
+        <span>authenticating</span>
+    ) : (
         <authContext.Provider value={value}>{children}</authContext.Provider>
     );
 };
