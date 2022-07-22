@@ -5,6 +5,7 @@ module.exports = {
         extend: {
             colors: {
                 "primary-action": "#FA4848",
+                "input-background": "#262626",
             },
         },
     },
