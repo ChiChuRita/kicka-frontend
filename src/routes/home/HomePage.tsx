@@ -15,6 +15,7 @@ const HomePage = () => {
                 const res = axios.get<UserData>("private/user");
                 return res;
             },
+            refetchInterval: 1000,
         },
         {
             queryKey: "games",
@@ -22,7 +23,7 @@ const HomePage = () => {
                 const res = axios.get<GamesData>("private/games");
                 return res;
             },
-            refetchInterval: 20000,
+            refetchInterval: 1000,
         },
     ]);
 

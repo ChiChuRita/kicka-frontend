@@ -158,18 +158,29 @@ const NewGameForm: React.FC<NewGameProps> = ({ user1, user2 }) => {
                     .max(30)
                     .required("Your opponent's score is required"),
             })}
-            onSubmit={async ({ score1, score2 }, { setSubmitting }) => {
+            onSubmit={async (
+                { score1, score2 },
+                { setSubmitting, setErrors }
+            ) => {
                 setSubmitting(true);
-                const { data } = await axios.post("/private/game/single", {
-                    user_name1: user1,
-                    user_name2: user2,
-                    time_started: date,
-                    score1: score1,
-                    score2: score2,
-                });
-                queryClient.invalidateQueries("games");
-                navigate("/");
-                setSubmitting(false);
+                try {
+                    const { data } = await axios.post("/private/game/single", {
+                        user_name1: user1,
+                        user_name2: user2,
+                        time_started: date,
+                        score1: score1,
+                        score2: score2,
+                    });
+                    queryClient.invalidateQueries("games");
+                    navigate("/");
+                    setSubmitting(false);
+                } catch (error) {
+                    setErrors({
+                        score1: "Something went wrong",
+                        score2: "Something went wrong",
+                    });
+                    setSubmitting(false);
+                }
             }}
         >
             <Form className="flex flex-col grow gap-5">
