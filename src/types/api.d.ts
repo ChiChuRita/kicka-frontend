@@ -10,6 +10,7 @@ interface RankingElementData {
 interface RankingData {
     ranking: RankingElementData[];
     lastQuery: number;
+    hasNext: boolean;
 }
 
 interface AuthData {
