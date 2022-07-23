@@ -7,16 +7,18 @@ const RankingTable = () => {
     const apiLink = "/public/ranking/single";
     const fetchData = ({ pageParam = 0 }): Promise<RankingData> => {
         return axios.get(apiLink, { params: { q: pageParam } }).then((res) => {
-            console.log(res.data);
-            const data = res.data.users.map((user: any) => {
-                return {
-                    username: user.username,
-                    elo: user.elo_score,
-                    ranking: user.position,
-                    games: user.games_played,
-                    wins: user.wins,
-                } as RankingElementData;
-            });
+            let data = [];
+            if (res.data)
+                data = res.data.users.map((user: any) => {
+                    return {
+                        username: user.username,
+                        elo: user.elo_score,
+                        ranking: user.position,
+                        games: user.games_played,
+                        wins: user.wins,
+                    } as RankingElementData;
+                });
+
             return {
                 ranking: data,
                 lastQuery: pageParam,
