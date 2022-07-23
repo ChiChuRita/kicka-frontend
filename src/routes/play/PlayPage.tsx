@@ -1,9 +1,7 @@
 import KickaLogo from "../../components/KickaLogo";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Select, { SingleValue, StylesConfig } from "react-select";
-import { GroupBase } from "react-select";
 import { debounce } from "throttle-debounce";
-import { useQuery } from "react-query";
 import axios from "axios";
 
 interface QueryResponse {
@@ -79,12 +77,12 @@ const PlayPage = () => {
                         colors: {
                             ...theme.colors,
                             primary: "#787878",
-                            neutral0: "#262626",
+                            neutral0: "#404040",
                             neutral20: "#787878",
                             neutral80: "white",
                             neutral90: "white",
                             primary25: "#404040",
-                            primary50: "#262626",
+                            primary50: "#404040",
                         },
                     })}
                 />
@@ -94,7 +92,7 @@ const PlayPage = () => {
                 disabled={!selectedOption}
                 onClick={() => console.log("HI")}
             >
-                Search
+                Create new game
             </button>
         </div>
     );
