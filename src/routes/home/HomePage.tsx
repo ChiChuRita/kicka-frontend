@@ -19,9 +19,10 @@ const HomePage = () => {
         {
             queryKey: "games",
             queryFn: async () => {
-                const res = axios.get<GameData[]>("private/games");
+                const res = axios.get<GamesData>("private/games");
                 return res;
             },
+            refetchInterval: 20000,
         },
     ]);
 
@@ -39,21 +40,9 @@ const HomePage = () => {
                     <img src={eloLogoIcon} className="h-8"></img>
                 </div>
             </div>
-            {query[1].data?.data && <GameTable gameData={query[1].data.data} />}
-            <GameEntry
-                gameData={{
-                    id: 2,
-                    entity_name1: "Test1",
-                    entity_name2: "Test2",
-                    score1: 1,
-                    score2: 2,
-                    is_draft: 1,
-                    time_started: "sd",
-                    time_ended: "sd",
-                    user1ack: 1,
-                    user2ack: 1,
-                }}
-            />
+            {query[1].data?.data.games && (
+                <GameTable gamesData={query[1].data.data} />
+            )}
         </div>
     );
 };

@@ -27,14 +27,23 @@ interface UserData {
     position: number;
 }
 
+interface GamesData {
+    continues: boolean;
+    games: GameData[] | null;
+}
+
 interface GameData {
     id: number;
-    entity_name1: string;
-    entity_name2: srting;
+    user_name1: string;
+    user_name2: srting;
     time_started: string;
     time_ended: string;
     score1: number;
     score2: number;
+    elo_user1: number;
+    elo_user2: number;
+    elo_change1: number;
+    elo_change2: number;
     is_draft: number;
     user1ack: number;
     user2ack: number;

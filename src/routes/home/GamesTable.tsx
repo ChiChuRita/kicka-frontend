@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import GameEntry from "./GameEntry";
 
 interface GameTableProps {
-    gameData: GameData[];
+    gamesData: GamesData;
 }
 
-const GameTable: React.FC<GameTableProps> = ({ gameData }) => {
+const GameTable: React.FC<GameTableProps> = ({ gamesData }) => {
     return (
         <div className="flex flex-col">
             <div className="flex flex-row justify-between items-center pb-4">
@@ -18,7 +18,7 @@ const GameTable: React.FC<GameTableProps> = ({ gameData }) => {
                 </Link>
             </div>
             <div className="flex flex-col gap-3">
-                {gameData.map((game, index) => (
+                {gamesData.games!.map((game, index) => (
                     <GameEntry key={index} gameData={game} />
                 ))}
             </div>
