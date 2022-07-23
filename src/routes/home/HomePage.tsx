@@ -5,6 +5,7 @@ import KickaLogo from "../../components/KickaLogo";
 import eloLogoIcon from "../../assets/elo.svg";
 import tropyIcon from "../../assets/trophy.svg";
 import GameTable from "./GamesTable";
+import GameEntry from "./GameEntry";
 
 const HomePage = () => {
     const query = useQueries([
@@ -39,6 +40,20 @@ const HomePage = () => {
                 </div>
             </div>
             {query[1].data?.data && <GameTable gameData={query[1].data.data} />}
+            <GameEntry
+                gameData={{
+                    id: 2,
+                    entity_name1: "Test1",
+                    entity_name2: "Test2",
+                    score1: 1,
+                    score2: 2,
+                    is_draft: 1,
+                    time_started: "sd",
+                    time_ended: "sd",
+                    user1ack: 1,
+                    user2ack: 1,
+                }}
+            />
         </div>
     );
 };

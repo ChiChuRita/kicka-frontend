@@ -34,4 +34,7 @@ interface GameData {
     time_ended: string;
     score1: number;
     score2: number;
+    is_draft: number;
+    user1ack: number;
+    user2ack: number;
 }
