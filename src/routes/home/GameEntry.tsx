@@ -57,7 +57,7 @@ const GameEntry: React.FC<GameEntryProps> = ({ gameData, username }) => {
                         elo_change={gameData.elo_change2}
                     />
                 </div>
-                {!isDraftByUser ? (
+                {gameData.is_draft && !isDraftByUser ? (
                     <div className="flex flex-row gap-2">
                         <button
                             className="button bg-primary-action h-2"
