@@ -4,8 +4,6 @@ import axios from "axios";
 import { useInfiniteQuery } from "react-query";
 
 const RankingTable = () => {
-    // temp link to the api for now
-    const usersPerQuery = 10;
     const apiLink = "/public/ranking/single";
     const fetchData = ({ pageParam = 0 }): Promise<RankingData> => {
         return axios.get(apiLink, { params: { q: pageParam } }).then((res) => {

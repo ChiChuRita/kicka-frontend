@@ -1,10 +1,14 @@
 import KickaLogo from "../../components/KickaLogo";
-import { useDebounce } from "../../hooks/useDebounce";
-import useSearchQuery from "../../hooks/useSearchQuery";
 import { useEffect, useState } from "react";
 import Select, { SingleValue, StylesConfig } from "react-select";
 import { GroupBase } from "react-select";
-//import { debounce } from "throttle-debounce";
+import { debounce } from "throttle-debounce";
+import { useQuery } from "react-query";
+import axios from "axios";
+
+interface QueryResponse {
+    [key: string]: string;
+}
 
 interface Option {
     value: string;
@@ -12,9 +16,34 @@ interface Option {
 }
 
 const PlayPage = () => {
-    let options: Option[] = [];
     const [selectedOption, setSelectedOption] = useState<SingleValue<Option>>();
-    const [optionsMessage, setOptionsMessage] = useState("No options bruh");
+    const [optionsMessage, setOptionsMessage] = useState("Start searching!");
+    const [options, setOptions] = useState<Option[]>([]);
+    const noUsersFound = () => {
+        setOptionsMessage("No users found");
+        setOptions([]);
+    };
+
+    const fetchUsers = async (searchQuery: string) => {
+        const { data } = await axios.get("/private/users", {
+            params: { like: searchQuery },
+        });
+        return data;
+    };
+    const debounceSearch = debounce(500, (searchQuery: string) => {
+        fetchUsers(searchQuery).then((data) => {
+            if (data)
+                setOptions(
+                    data.map((item: any) => {
+                        return {
+                            value: item.username,
+                            label: item.username,
+                        };
+                    })
+                );
+            else noUsersFound();
+        });
+    });
     const optionStyles: StylesConfig<Option, false> = {
         option: (provided, state) => ({
             ...provided,
@@ -25,13 +54,15 @@ const PlayPage = () => {
         }),
     };
     const typeSearch = (search: string) => {
-        setSelectedOption(undefined);
-        console.log(search);
-        const debouncedSearch = useDebounce(search, 500);
+        debounceSearch(search);
+        if (!search) {
+            debounceSearch.cancel({ upcomingOnly: true });
+            noUsersFound();
+        } else setOptionsMessage("Fetching...");
     };
 
     return (
-        <div>
+        <div className="flex flex-col grow max-w-full">
             <KickaLogo />
             <div className="App">
                 <Select
@@ -58,8 +89,13 @@ const PlayPage = () => {
                     })}
                 />
             </div>
-            Search for username:
-            <input type="textbox" className="" onChange={searchChanged}></input>
+            <button
+                className="button"
+                disabled={!selectedOption}
+                onClick={() => console.log("HI")}
+            >
+                Search
+            </button>
         </div>
     );
 };
