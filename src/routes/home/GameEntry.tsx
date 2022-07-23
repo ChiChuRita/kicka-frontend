@@ -59,10 +59,16 @@ const GameEntry: React.FC<GameEntryProps> = ({ gameData, username }) => {
                 </div>
                 {!isDraftByUser ? (
                     <div className="flex flex-row gap-2">
-                        <button className="button bg-primary-action h-2">
+                        <button
+                            className="button bg-primary-action h-2"
+                            onClick={() => mutate(false)}
+                        >
                             Discard
                         </button>
-                        <button className="button bg-green-500 h-2">
+                        <button
+                            className="button bg-green-500 h-2"
+                            onClick={() => mutate(true)}
+                        >
                             Confirm
                         </button>
                     </div>
