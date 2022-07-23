@@ -50,6 +50,11 @@ const PlayPage = () => {
             ...provided,
             color: "white",
         }),
+        control: (provided, state) => ({
+            ...provided,
+            border: "none",
+            boxShadow: "none",
+        }),
     };
     const typeSearch = (search: string) => {
         debounceSearch(search);
