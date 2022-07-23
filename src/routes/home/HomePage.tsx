@@ -30,8 +30,8 @@ const HomePage = () => {
             <h2>Welcome back, {query[0].data?.data.username}!</h2>
             <div className="flex flex-row justify-between">
                 <div className="flex flex-row gap-3 items-center">
-                    <h2>{query[0].data?.data.position}.</h2>
                     <img src={tropyIcon} className="h-8"></img>
+                    <h2>{query[0].data?.data.position}.</h2>
                 </div>
                 <div className="flex flex-row gap-3 items-center">
                     <h2>{query[0].data?.data.elo_score}</h2>
