@@ -8,7 +8,7 @@ const RankingTable = () => {
     const fetchData = ({ pageParam = 0 }): Promise<RankingData> => {
         return axios.get(apiLink, { params: { q: pageParam } }).then((res) => {
             console.log(res.data);
-            const data = res.data.map((user: any) => {
+            const data = res.data.users.map((user: any) => {
                 return {
                     username: user.username,
                     elo: user.elo_score,
@@ -17,7 +17,11 @@ const RankingTable = () => {
                     wins: user.wins,
                 } as RankingElementData;
             });
-            return { ranking: data, lastQuery: pageParam } as RankingData;
+            return {
+                ranking: data,
+                lastQuery: pageParam,
+                hasNext: res.data.continues,
+            } as RankingData;
         });
     };
 
@@ -31,7 +35,8 @@ const RankingTable = () => {
         status,
     } = useInfiniteQuery("rankingData", fetchData, {
         getNextPageParam: (lastPage, pages) => {
-            return lastPage.lastQuery + 10;
+            if (lastPage.hasNext) return lastPage.lastQuery + 10;
+            return undefined;
         },
     });
 
@@ -78,7 +83,7 @@ const RankingTable = () => {
                         ? "Loading more..."
                         : hasNextPage
                         ? "Load More"
-                        : "Nothing more to load"}
+                        : ""}
                 </button>
             </div>
             <div>
