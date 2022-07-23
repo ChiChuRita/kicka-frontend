@@ -38,7 +38,7 @@ const HomePage = () => {
                     <img src={eloLogoIcon} className="h-8"></img>
                 </div>
             </div>
-            {query[1].data && <GameTable gameData={query[1].data.data} />}
+            {query[1].data?.data && <GameTable gameData={query[1].data.data} />}
         </div>
     );
 };
