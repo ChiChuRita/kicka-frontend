@@ -6,7 +6,7 @@ import { ReactComponent as SettingIcon } from "./assets/settings_icon.svg";
 const AppLayout: React.FC = () => {
     return (
         <div className="flex flex-col justify-between md:max-w-2xl container bg-black">
-            <div className="flex grow px-6 pt-16 pb-0 max-w-full">
+            <div className="flex grow px-6 pt-12 pb-0 max-w-full">
                 <Outlet />
             </div>
             <div className="container flex justify-center gap-5 bg-neutral-800 p-4 rounded-t-3xl">
