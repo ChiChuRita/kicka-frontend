@@ -16,29 +16,28 @@ interface Option {
 const PlayPage = () => {
     const [selectedOption, setSelectedOption] = useState<SingleValue<Option>>();
     const [optionsMessage, setOptionsMessage] = useState("Start searching!");
-    const [newGameCreated, setNewGameCreated] = useState(false);
     const [options, setOptions] = useState<Option[]>([]);
 
     const { data: ownUser, isLoading } = useQuery("user", () => {
-        return axios.get<UserData>("/private/user");
+        return axios.get<UserData | null>("/private/user");
     });
-
-    const noUsersFound = () => {
-        setOptionsMessage("No users found");
-        setOptions([]);
-    };
-
     const fetchUsers = async (searchQuery: string) => {
         const { data } = await axios.get<UserData[] | null>("/private/users", {
             params: { like: searchQuery },
         });
         return data;
     };
+
+    const noUsersFound = () => {
+        setOptionsMessage("No users found");
+        setOptions([]);
+    };
+
     const debounceSearch = debounce(500, (searchQuery: string) => {
         fetchUsers(searchQuery).then((data) => {
-            if (data) {
+            if (data && ownUser) {
                 data = data.filter(
-                    (user) => user.username !== ownUser!.data.username
+                    (user) => user.username !== ownUser.data!.username
                 );
                 if (data.length === 0) {
                     noUsersFound();
@@ -78,9 +77,10 @@ const PlayPage = () => {
     };
 
     return (
-        <div className="flex flex-col grow max-w-full gap-2">
+        <div className="flex flex-col grow max-w-full">
             <KickaLogo />
-            <div className="App">
+            <div className="App flex flex-col gap-2 pt-6 pb-6">
+                <span className="text-xl">Search for your opponent!</span>
                 <Select
                     defaultValue={selectedOption}
                     onInputChange={(value) => {
@@ -105,17 +105,12 @@ const PlayPage = () => {
                     })}
                 />
             </div>
-            <button
-                className="button"
-                disabled={!selectedOption}
-                onClick={() => setNewGameCreated(true)}
-            >
-                Create new game
-            </button>
-            {newGameCreated && (
+
+            {ownUser && (
                 <NewGameForm
-                    user1={ownUser!.data.username}
-                    user2={selectedOption!.value}
+                    user1={ownUser.data!.username}
+                    user2={selectedOption?.value}
+                    userSelected={!selectedOption}
                 ></NewGameForm>
             )}
         </div>
@@ -124,10 +119,15 @@ const PlayPage = () => {
 
 interface NewGameProps {
     user1: string;
-    user2: string;
+    user2: string | undefined;
+    userSelected: boolean;
 }
 
-const NewGameForm: React.FC<NewGameProps> = ({ user1, user2 }) => {
+const NewGameForm: React.FC<NewGameProps> = ({
+    user1,
+    user2,
+    userSelected,
+}) => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
     let currentDate = new Date();
@@ -183,14 +183,20 @@ const NewGameForm: React.FC<NewGameProps> = ({ user1, user2 }) => {
                 }
             }}
         >
-            <Form className="flex flex-col grow gap-5">
-                <div className="flex flex-row justify-between bg-neutral-800 rounded-xl py-4 px-6">
-                    <span>{user1}</span>
-                    <span>:</span>
-                    <span>{user2}</span>
+            <Form className="flex flex-col grow gap-2">
+                <div className="flex flex-row">
+                    <div className="flex-initial bg-neutral-800 py-4 px-6 rounded-xl justify-center">
+                        {user1}
+                    </div>
+                    <div className=" bg-neutral-800 py-3 px-6 rounded-xl justify-center flex-initial h-12 self-center align-middle">
+                        VS
+                    </div>
+                    <div className="flex-initial bg-neutral-800 py-4 px-6 rounded-xl justify-center w-52">
+                        {user2}
+                    </div>
                 </div>
-                <div className="flex flex-row justify-between">
-                    <div className="flex flex-col">
+                <div className="flex flex-row justify-between max-w-0">
+                    <div className="flex flex-col max-w-xs">
                         <Field name="score1" type="number" />
                         <ErrorMessage name="score1" />
                     </div>
@@ -199,7 +205,11 @@ const NewGameForm: React.FC<NewGameProps> = ({ user1, user2 }) => {
                         <ErrorMessage name="score2" />
                     </div>
                 </div>
-                <button type="submit" className="button bg-primary-action">
+                <button
+                    type="submit"
+                    className="button bg-primary-action"
+                    disabled={userSelected}
+                >
                     Submit game
                 </button>
             </Form>
