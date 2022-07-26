@@ -22,7 +22,7 @@ const RankingTable = () => {
             return {
                 ranking: data,
                 lastQuery: pageParam,
-                hasNext: res.data.continues,
+                hasNext: true, // actually res.data.continues, but currently not working
             } as RankingData;
         });
     };
