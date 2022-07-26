@@ -9,45 +9,48 @@ import { Formik, Field, ErrorMessage, Form } from "formik";
 import * as yup from "yup";
 
 interface Option {
-    value: string;
+    value: UserData;
     label: string;
 }
 
 const PlayPage = () => {
     const [selectedOption, setSelectedOption] = useState<SingleValue<Option>>();
     const [optionsMessage, setOptionsMessage] = useState("Start searching!");
-    const [newGameCreated, setNewGameCreated] = useState(false);
     const [options, setOptions] = useState<Option[]>([]);
 
     const { data: ownUser, isLoading } = useQuery("user", () => {
-        return axios.get<UserData>("/private/user");
+        return axios.get<UserData | null>("/private/user");
     });
-
-    const noUsersFound = () => {
-        setOptionsMessage("No users found");
-        setOptions([]);
-    };
-
     const fetchUsers = async (searchQuery: string) => {
         const { data } = await axios.get<UserData[] | null>("/private/users", {
             params: { like: searchQuery },
         });
         return data;
     };
+
+    const noUsersFound = () => {
+        setOptionsMessage("No users found");
+        setOptions([]);
+    };
+
     const debounceSearch = debounce(500, (searchQuery: string) => {
         fetchUsers(searchQuery).then((data) => {
-            if (data) {
+            if (data && ownUser) {
                 data = data.filter(
-                    (user) => user.username !== ownUser!.data.username
+                    (user) => user.username !== ownUser.data!.username
                 );
                 if (data.length === 0) {
                     noUsersFound();
                 } else {
                     setOptions(
-                        data.map((item: any) => {
+                        data.map((item) => {
                             return {
-                                value: item.username,
-                                label: item.username,
+                                value: item,
+                                label:
+                                    item.username +
+                                    " —🏆" +
+                                    item.position +
+                                    ".",
                             };
                         })
                     );
@@ -78,9 +81,10 @@ const PlayPage = () => {
     };
 
     return (
-        <div className="flex flex-col grow max-w-full gap-2">
+        <div className="flex flex-col grow max-w-full">
             <KickaLogo />
-            <div className="App">
+            <div className="App flex flex-col gap-2 pt-6 pb-6">
+                <span className="text-xl">Search for your opponent!</span>
                 <Select
                     defaultValue={selectedOption}
                     onInputChange={(value) => {
@@ -105,17 +109,12 @@ const PlayPage = () => {
                     })}
                 />
             </div>
-            <button
-                className="button"
-                disabled={!selectedOption}
-                onClick={() => setNewGameCreated(true)}
-            >
-                Create new game
-            </button>
-            {newGameCreated && (
+
+            {ownUser && (
                 <NewGameForm
-                    user1={ownUser!.data.username}
-                    user2={selectedOption!.value}
+                    user1={ownUser.data}
+                    user2={selectedOption?.value}
+                    userSelected={!selectedOption}
                 ></NewGameForm>
             )}
         </div>
@@ -123,26 +122,19 @@ const PlayPage = () => {
 };
 
 interface NewGameProps {
-    user1: string;
-    user2: string;
+    user1: UserData | null;
+    user2: UserData | undefined;
+    userSelected: boolean;
 }
 
-const NewGameForm: React.FC<NewGameProps> = ({ user1, user2 }) => {
+const NewGameForm: React.FC<NewGameProps> = ({
+    user1,
+    user2,
+    userSelected,
+}) => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    let currentDate = new Date();
-    const date =
-        currentDate.getFullYear() +
-        "/" +
-        (currentDate.getMonth() + 1) +
-        "/" +
-        currentDate.getDate() +
-        "." +
-        currentDate.getHours() +
-        ":" +
-        currentDate.getMinutes() +
-        ":" +
-        currentDate.getSeconds();
+    const currentDate = new Date().getTime().toString();
     return (
         <Formik
             initialValues={{ score1: 0, score2: 0 }}
@@ -165,9 +157,9 @@ const NewGameForm: React.FC<NewGameProps> = ({ user1, user2 }) => {
                 setSubmitting(true);
                 try {
                     const { data } = await axios.post("/private/game/single", {
-                        user_name1: user1,
-                        user_name2: user2,
-                        time_started: date,
+                        user_name1: user1?.username,
+                        user_name2: user2?.username,
+                        time_started: currentDate,
                         score1: score1,
                         score2: score2,
                     });
@@ -183,15 +175,38 @@ const NewGameForm: React.FC<NewGameProps> = ({ user1, user2 }) => {
                 }
             }}
         >
-            <Form className="flex flex-col grow gap-5">
-                <div className="flex flex-row justify-between bg-primary-bg rounded-xl py-4 px-6">
-                    <span>{user1}</span>
-                    <span>:</span>
-                    <span>{user2}</span>
+            <Form className="flex flex-col grow gap-2">
+                <div className="bg-primary-bg py-3 px-5 rounded-xl"></div>
+
+                <div className="flex flex-row">
+                    <div className="flex flex-1 min-w-min justify-start">
+                        <div className="bg-primary-bg py-3 px-5 rounded-xl">
+                            {user1?.username}
+                        </div>
+                    </div>
+
+                    <div className="bg-primary-action py-2 px-4 rounded-xl self-center">
+                        VS
+                    </div>
+
+                    <div className="flex flex-1 min-w-min justify-end">
+                        <div
+                            className={
+                                "bg-primary-bg py-3 px-5 rounded-xl " +
+                                (userSelected && "w-6/12")
+                            }
+                        >
+                            {user2?.username}
+                        </div>
+                    </div>
                 </div>
                 <div className="flex flex-row justify-between">
-                    <div className="flex flex-col">
-                        <Field name="score1" type="number" />
+                    <div className="flex flex-col w-36">
+                        <Field
+                            className="max-w-xs"
+                            name="score1"
+                            type="number"
+                        />
                         <ErrorMessage name="score1" />
                     </div>
                     <div className="flex flex-col">
@@ -199,7 +214,11 @@ const NewGameForm: React.FC<NewGameProps> = ({ user1, user2 }) => {
                         <ErrorMessage name="score2" />
                     </div>
                 </div>
-                <button type="submit" className="button bg-primary-action">
+                <button
+                    type="submit"
+                    className="button bg-primary-action"
+                    disabled={userSelected}
+                >
                     Submit game
                 </button>
             </Form>
