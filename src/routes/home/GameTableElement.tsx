@@ -38,6 +38,7 @@ const GameTableElement: React.FC<GameEntryProps> = ({ gameData, username }) => {
                 <div className="flex flex-col">
                     <h2>{gameData.user_name1}</h2>
                     <EloDisplay
+                        is_draft
                         elo={gameData.elo_user1}
                         elo_change={gameData.elo_change1}
                     />
@@ -61,6 +62,7 @@ const GameTableElement: React.FC<GameEntryProps> = ({ gameData, username }) => {
                 <div className="flex flex-col">
                     <h2>{gameData.user_name2}</h2>
                     <EloDisplay
+                        is_draft
                         elo={gameData.elo_user2}
                         elo_change={gameData.elo_change2}
                     />
@@ -89,28 +91,39 @@ const GameTableElement: React.FC<GameEntryProps> = ({ gameData, username }) => {
 interface EloDisplayProps {
     elo: number;
     elo_change: number;
+    is_draft: boolean;
 }
-const EloDisplay: React.FC<EloDisplayProps> = ({ elo, elo_change }) => {
+const EloDisplay: React.FC<EloDisplayProps> = ({
+    elo,
+    elo_change,
+    is_draft,
+}) => {
     const isPostive = elo_change > 0;
 
     return (
         <div className="flex flex-row items-center gap-[2px]">
             <span className="mr-1">{elo}</span>
-            <img
-                src={isPostive ? pArrowIcon : nArrowIcon}
-                className={
-                    isPostive ? "drop-shadow-secondary" : "drop-shadow-primary"
-                }
-            />
-            <span
-                className={
-                    isPostive
-                        ? "text-secondary-action drop-shadow-secondary"
-                        : "text-primary-action drop-shadow-primary"
-                }
-            >
-                {Math.abs(elo_change)}
-            </span>
+            {!is_draft && (
+                <>
+                    <img
+                        src={isPostive ? pArrowIcon : nArrowIcon}
+                        className={
+                            isPostive
+                                ? "drop-shadow-secondary"
+                                : "drop-shadow-primary"
+                        }
+                    />
+                    <span
+                        className={
+                            isPostive
+                                ? "text-secondary-action drop-shadow-secondary"
+                                : "text-primary-action drop-shadow-primary"
+                        }
+                    >
+                        {Math.abs(elo_change)}
+                    </span>
+                </>
+            )}
         </div>
     );
 };

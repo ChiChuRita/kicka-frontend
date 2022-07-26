@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import GameTableElement from "./GameTableElement";
+import Info from "./Info";
 
 interface GameTableProps {
     gamesData: GamesData;
@@ -19,6 +20,7 @@ const GameTable: React.FC<GameTableProps> = ({ gamesData, username }) => {
                 </Link>
             </div>
             <div className="flex flex-col overflow-y-auto">
+                {!gamesData.games && <Info />}
                 {gamesData.games?.map((game, index) => (
                     <GameTableElement
                         key={index}
