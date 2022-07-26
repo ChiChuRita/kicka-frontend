@@ -23,10 +23,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ registerToken }) => {
 
     return (
         <Formik
-            initialValues={{ username: "", score: 0 }}
+            initialValues={{ username: "" }}
             validationSchema={yup.object({
                 username: yup.string().min(5).max(20).required(),
-                score: yup.number().min(0).max(30).required(),
             })}
             onSubmit={async ({ username }, { setSubmitting }) => {
                 setSubmitting(true);
@@ -44,7 +43,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ registerToken }) => {
                 <label>Username</label>
                 <Field name="username" type="text" />
                 <ErrorMessage name="username" />
-                <ScoreInput name="score" />
                 <button type="submit" className="button bg-primary-action">
                     Register
                 </button>
