@@ -171,7 +171,7 @@ const NewGameForm: React.FC<NewGameProps> = ({
                     setSubmitting(false);
                 } catch (error) {
                     setErrors({
-                        score1: "Something went wrong",
+                        score1: "Select a score that isn't a draw",
                         score2: "Something went wrong",
                     });
                     setSubmitting(false);
@@ -241,15 +241,15 @@ const NewGameForm: React.FC<NewGameProps> = ({
                                 </div>
                             </div>
                         ) : (
-                            <div className="flex flex-1 justify-end bg-primary-bg rounded-xl ml-4 animate-pulse"></div>
+                            <div className="flex flex-1 justify-end rounded-xl ml-4"></div>
                         )}
                     </div>
                     <div className="flex place-content-end gap-3 pt-5">
+                        <div className="flex items-center text-start grow text-red-500">
+                            <ErrorMessage name="score1" />
+                        </div>
                         <Link to="play">
-                            <button
-                                className="button bg-primary-action h-2 shadow-primary"
-                                onClick={() => console.log("clicked")}
-                            >
+                            <button className="button bg-primary-action h-2 shadow-primary">
                                 Cancel
                             </button>
                         </Link>
@@ -266,8 +266,6 @@ const NewGameForm: React.FC<NewGameProps> = ({
                         </button>
                     </div>
                 </div>
-                <ErrorMessage name="score1" />
-                <ErrorMessage name="score2" />
             </Form>
         </Formik>
     );
