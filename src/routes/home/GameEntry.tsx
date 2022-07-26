@@ -2,7 +2,8 @@ import React from "react";
 import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
 
-import arrowIcon from "../../assets/arrow.svg";
+import pArrowIcon from "../../assets/arrow_positive.svg";
+import nArrowIcon from "../../assets/arrow_negative.svg";
 
 interface GameEntryProps {
     gameData: GameData;
@@ -26,10 +27,11 @@ const GameEntry: React.FC<GameEntryProps> = ({ gameData, username }) => {
         }
     );
 
-    const isDraftByUser = gameData.is_draft && gameData.user_name1 === username;
+    let isDraftByUser = gameData.is_draft && gameData.user_name1 === username;
 
+    isDraftByUser = false;
     return (
-        <div className="flex flex-col gap-2 bg-neutral-800 rounded-xl p-5">
+        <div className="flex flex-col gap-2 bg-primary-bg rounded-xl p-5">
             <div className="flex flex-row justify-between">
                 <div className="flex flex-col">
                     <h2>{gameData.user_name1}</h2>
@@ -44,7 +46,7 @@ const GameEntry: React.FC<GameEntryProps> = ({ gameData, username }) => {
                     <div>{gameData.time_started}</div>
                 )}
             </div>
-            <div className="flex flex-row justify-center bg-neutral-700 rounded-xl py-2">
+            <div className="flex flex-row justify-center bg-primary-bg rounded-xl py-2">
                 <h2>
                     {gameData.score1} : {gameData.score2}
                 </h2>
@@ -60,13 +62,13 @@ const GameEntry: React.FC<GameEntryProps> = ({ gameData, username }) => {
                 {gameData.is_draft && !isDraftByUser ? (
                     <div className="flex flex-row gap-2">
                         <button
-                            className="button bg-primary-action h-2"
+                            className="button bg-primary-action h-2 shadow-primary"
                             onClick={() => mutate(false)}
                         >
                             Discard
                         </button>
                         <button
-                            className="button bg-green-500 h-2"
+                            className="button h-2 bg-green-500 shadow-secondary shadow-green-500/60"
                             onClick={() => mutate(true)}
                         >
                             Confirm
@@ -83,16 +85,26 @@ interface EloDisplayProps {
     elo_change: number;
 }
 const EloDisplay: React.FC<EloDisplayProps> = ({ elo, elo_change }) => {
-    const isPostive = elo_change >= 0;
+    const isPostive = elo_change > 0;
 
     return (
-        <div className="flex flex-row items-center gap-1">
-            <span className="text-2xl mr-2">{elo}</span>
+        <div className="flex flex-row items-center gap-[2px]">
+            <span className="mr-1">{elo}</span>
             <img
-                src={arrowIcon}
-                className={isPostive ? "rotate-0" : "rotate-180"}
+                src={isPostive ? pArrowIcon : nArrowIcon}
+                className={
+                    isPostive ? "drop-shadow-secondary" : "drop-shadow-primary"
+                }
             />
-            <span>{Math.abs(elo_change)}</span>
+            <span
+                className={
+                    isPostive
+                        ? "text-secondary-action drop-shadow-secondary"
+                        : "text-primary-action drop-shadow-primary"
+                }
+            >
+                {Math.abs(elo_change)}
+            </span>
         </div>
     );
 };

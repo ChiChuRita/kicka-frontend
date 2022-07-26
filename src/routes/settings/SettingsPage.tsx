@@ -6,11 +6,9 @@ import { useAuth } from "../../context/AuthContext";
 
 const SettingsPage = () => {
     const { token, logout } = useAuth();
+    const [deleteModal, setDeleteModal] = useState(false);
+
     const navigate = useNavigate();
-    const [deleteModel, setDeleteModel] = useState(false);
-    const { data, isLoading } = useQuery("user", () => {
-        return axios.get<UserData>("/private/user");
-    });
 
     const { mutateAsync } = useMutation(() => {
         return axios.delete("/private/user");
@@ -27,6 +25,10 @@ const SettingsPage = () => {
         navigate("/");
     };
 
+    const onCancel = async () => {
+        setDeleteModal(false);
+    };
+
     return (
         <div className="flex flex-col grow gap-5">
             <h1>Settings</h1>
@@ -34,27 +36,24 @@ const SettingsPage = () => {
                 Logout
             </button>
             <button
-                className="button bg-primary-action"
+                className="button bg-primary-action shadow-primary"
                 onClick={() => {
-                    setDeleteModel(true);
+                    setDeleteModal(true);
                 }}
             >
                 Delete Account
             </button>
-            {data ? (
-                <div>
-                    <span>Username: {data.data.username}</span>
-                </div>
-            ) : (
-                <div>Loading...</div>
-            )}
-            {deleteModel && (
-                <div className="flex flex-row items-center justify-between bg-neutral-800 rounded-md p-6">
+
+            {deleteModal && (
+                <div className="flex flex-row items-center justify-between bg-primary-bg rounded-md p-6">
                     <span>
                         Are you sure that you want to delete your Account?
                     </span>
+                    <button className="button" onClick={onCancel}>
+                        Cancel
+                    </button>
                     <button
-                        className="button bg-primary-action"
+                        className="button bg-primary-action shadow-primary"
                         onClick={onDelete}
                     >
                         Delete

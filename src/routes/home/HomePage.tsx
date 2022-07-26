@@ -2,7 +2,6 @@ import axios from "axios";
 import { useQueries } from "react-query";
 import { Link } from "react-router-dom";
 import KickaLogo from "../../components/KickaLogo";
-import eloLogoIcon from "../../assets/elo.svg";
 import trophyIcon from "../../assets/trophy.svg";
 import GameTable from "./GamesTable";
 
@@ -29,13 +28,17 @@ const HomePage = () => {
     return (
         <div className="flex flex-col grow gap-5">
             <KickaLogo />
-            <div className="flex flex-row justify-between py-4">
+            <div className="flex flex-row justify-between items-end py-4">
                 <div className="flex flex-col">
                     <h2>Welcome back,</h2>
                     <h1>{query[0].data?.data.username}!</h1>
                 </div>
                 <div className="flex flex-row gap-2 items-center">
-                    <img src={trophyIcon} alt="Trophy" className="h-6" />
+                    <img
+                        src={trophyIcon}
+                        alt="Trophy"
+                        className="h-6 drop-shadow-gold"
+                    />
                     <h1>{query[0].data?.data.position}.</h1>
                 </div>
             </div>

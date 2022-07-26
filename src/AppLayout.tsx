@@ -9,7 +9,7 @@ const AppLayout: React.FC = () => {
             <div className="flex grow px-6 pt-12 pb-0 max-w-full">
                 <Outlet />
             </div>
-            <div className="container flex justify-center gap-5 bg-neutral-800 p-4 rounded-t-3xl">
+            <div className="container flex justify-center gap-5 bg-primary-bg p-4 rounded-t-3xl">
                 <NavButton to="/ranking">
                     <RankingIcon />
                 </NavButton>

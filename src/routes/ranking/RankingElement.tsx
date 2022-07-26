@@ -1,15 +1,33 @@
 import eloLogo from "../../assets/elo.svg";
+import trophy from "../../assets/trophy.svg";
+import trophy_silver from "../../assets/trophy_silver.svg";
+import trophy_bronze from "../../assets/trophy_bronze.svg";
 
 interface RankingProps {
     rankingElement: RankingElementData;
 }
 
-const RankingElement = ({ rankingElement }: RankingProps) => {
+const RankingElement: React.FC<RankingProps> = ({ rankingElement }) => {
     return (
-        <div className="flex flex-row rounded-xl py-2 px-4 my-3 bg-neutral-800 justify-between">
+        <div className="flex flex-row rounded-xl py-2 px-4 my-3 bg-primary-bg justify-between">
             <div className="flex items-center">
                 <div className="rank pr-2 text-xl">
-                    {rankingElement.ranking}.
+                    {rankingElement.ranking == 1 && (
+                        <img src={trophy} className="drop-shadow-gold" />
+                    )}
+                    {rankingElement.ranking == 2 && (
+                        <img
+                            src={trophy_silver}
+                            className="drop-shadow-silver"
+                        />
+                    )}
+                    {rankingElement.ranking == 3 && (
+                        <img
+                            src={trophy_bronze}
+                            className="drop-shadow-bronze"
+                        />
+                    )}
+                    {rankingElement.ranking > 3 && rankingElement.ranking + "."}
                 </div>
                 <div className="username text-xl">
                     {rankingElement.username}
@@ -17,7 +35,7 @@ const RankingElement = ({ rankingElement }: RankingProps) => {
             </div>
             <div className="flex">
                 <div className="flex flex-row items-center pr-3">
-                    <div className="pr-2 text-yellow-300 text-xl font-semibold">
+                    <div className="pr-2 text-trophy text-xl font-semibold">
                         {rankingElement.elo}
                     </div>
                     <img src={eloLogo} className="h-6" />

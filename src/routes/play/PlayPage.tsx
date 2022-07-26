@@ -184,7 +184,7 @@ const NewGameForm: React.FC<NewGameProps> = ({ user1, user2 }) => {
             }}
         >
             <Form className="flex flex-col grow gap-5">
-                <div className="flex flex-row justify-between bg-neutral-800 rounded-xl py-4 px-6">
+                <div className="flex flex-row justify-between bg-primary-bg rounded-xl py-4 px-6">
                     <span>{user1}</span>
                     <span>:</span>
                     <span>{user2}</span>

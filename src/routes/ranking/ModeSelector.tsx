@@ -10,12 +10,12 @@ interface ModeSelectorProps {
 
 const ModeSelector: React.FC<ModeSelectorProps> = ({ mode, onChange }) => {
     return (
-        <div className="flex flex-row bg-neutral-700 rounded-md">
+        <div className="flex flex-row bg-primary-bg rounded-md">
             <button
                 className={
                     mode === "single"
-                        ? "bg-neutral-500 inline-flex items-center gap-1 rounded-md text-white py-2 px-4"
-                        : "bg-neutral-700 inline-flex items-center gap-1 rounded-md text-white py-2 px-4"
+                        ? "bg-primary-bg inline-flex items-center gap-1 rounded-md text-white py-2 px-4"
+                        : "inline-flex items-center gap-1 rounded-md text-white py-2 px-4"
                 }
                 onClick={() => onChange("single")}
             >
@@ -25,8 +25,8 @@ const ModeSelector: React.FC<ModeSelectorProps> = ({ mode, onChange }) => {
             <button
                 className={
                     mode === "duo"
-                        ? "bg-neutral-500 inline-flex items-center gap-1 rounded-md text-white py-2 px-4"
-                        : "bg-neutral-700 inline-flex items-center gap-1 rounded-md text-white py-2 px-4"
+                        ? "bg-primary-bg inline-flex items-center gap-1 rounded-md text-white py-2 px-4"
+                        : "inline-flex items-center gap-1 rounded-md text-white py-2 px-4"
                 }
                 onClick={() => onChange("duo")}
             >

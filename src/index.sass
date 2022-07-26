@@ -2,7 +2,7 @@
 @tailwind components
 @tailwind utilities
 
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap')
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap')
 
 #root
   display: flex
@@ -18,22 +18,25 @@
   font-size: 18px
 
 ::-webkit-scrollbar
-  @apply w-2
+  @apply w-2 fixed
 
 ::-webkit-scrollbar-track
   @apply bg-transparent
 
 ::-webkit-scrollbar-thumb
-  @apply bg-neutral-900 rounded-xl
+  @apply bg-neutral-800 rounded-xl
 
 @layer base
   h1
     font-size: 32px
+    font-weight: 700
+    line-height: 1.1
   h2
     font-size: 24px
+    line-height: 1.1
   input
-    @apply bg-neutral-800 py-2 px-4 rounded-md outline-none
+    @apply bg-primary-bg py-2 px-4 rounded-md outline-none
 
 @layer components
   .button
-    @apply rounded-md text-white bg-neutral-700 py-2 px-4 min-h-[42px] min-w-[42px] outline-none disabled:text-neutral-500 disabled:bg-neutral-800
+    @apply rounded-md text-white bg-primary-bg py-2 px-4 min-h-[42px] min-w-[42px] outline-none disabled:text-neutral-500 disabled:bg-primary-bg

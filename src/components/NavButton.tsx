@@ -12,7 +12,7 @@ const NavButton: React.FC<NavButtonProps> = ({ to, children }) => {
                 <button
                     className={
                         isActive
-                            ? "button bg-primary-action shadow-[0px_0px_12px_0px_#FA484899] shadow-red-500"
+                            ? "button bg-primary-action shadow-primary"
                             : "button"
                     }
                 >
