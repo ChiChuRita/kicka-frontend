@@ -14,6 +14,9 @@ const rankingVariants: Variants = {
     },
     onscreen: {
         y: 0,
+        transition: {
+            type: "tween",
+        },
     },
 };
 
