@@ -34,7 +34,7 @@ const GameEntry: React.FC<GameEntryProps> = ({ gameData, username }) => {
 
     isDraftByUser = false;
     return (
-        <div className="flex flex-col gap-2 bg-neutral-800 rounded-xl p-5 mb-5">
+        <div className="flex flex-col gap-2 bg-primary-bg rounded-xl p-5 mb-5">
             <div className="flex flex-row justify-between">
                 <div className="flex flex-col">
                     <h2>{gameData.user_name1}</h2>
@@ -66,7 +66,7 @@ const GameEntry: React.FC<GameEntryProps> = ({ gameData, username }) => {
                         elo_change={gameData.elo_change2}
                     />
                 </div>
-                {gameData.is_draft && !isDraftByUser && (
+                {gameData.is_draft && !isDraftByUser ? (
                     <div className="flex flex-row gap-2">
                         <button
                             className="button bg-primary-action h-2 shadow-primary"
@@ -81,7 +81,7 @@ const GameEntry: React.FC<GameEntryProps> = ({ gameData, username }) => {
                             Confirm
                         </button>
                     </div>
-                )}
+                ) : null}
             </div>
         </div>
     );
