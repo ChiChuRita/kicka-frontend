@@ -45,19 +45,21 @@ const SettingsPage = () => {
             </button>
 
             {deleteModal && (
-                <div className="flex flex-row items-center justify-between bg-primary-bg rounded-md p-6">
-                    <span>
+                <div className="flex flex-col justify-between bg-primary-bg rounded-md p-6 gap-6">
+                    <span className="text-center">
                         Are you sure that you want to delete your Account?
                     </span>
-                    <button className="button" onClick={onCancel}>
-                        Cancel
-                    </button>
-                    <button
-                        className="button bg-primary-action shadow-primary"
-                        onClick={onDelete}
-                    >
-                        Delete
-                    </button>
+                    <div className="flex flex-row justify-center gap-5">
+                        <button className="button" onClick={onCancel}>
+                            Cancel
+                        </button>
+                        <button
+                            className="button bg-primary-action shadow-primary"
+                            onClick={onDelete}
+                        >
+                            Delete
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
