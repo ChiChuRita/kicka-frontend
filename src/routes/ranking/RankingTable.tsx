@@ -8,7 +8,8 @@ const RankingTable = () => {
     const fetchData = ({ pageParam = 0 }): Promise<RankingData> => {
         return axios.get(apiLink, { params: { q: pageParam } }).then((res) => {
             let data = [];
-            if (res.data && res.data.users)
+            if (res.data && res.data.users) {
+                res.data.users = res.data.users.slice(0, 10);
                 data = res.data.users.map((user: any) => {
                     return {
                         username: user.username,
@@ -18,6 +19,7 @@ const RankingTable = () => {
                         wins: user.wins,
                     } as RankingElementData;
                 });
+            }
 
             return {
                 ranking: data,
