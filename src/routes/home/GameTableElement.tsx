@@ -38,7 +38,7 @@ const GameTableElement: React.FC<GameEntryProps> = ({ gameData, username }) => {
                 <div className="flex flex-col">
                     <h2>{gameData.user_name1}</h2>
                     <EloDisplay
-                        is_draft
+                        is_draft={gameData.is_draft}
                         elo={gameData.elo_user1}
                         elo_change={gameData.elo_change1}
                     />
@@ -62,7 +62,7 @@ const GameTableElement: React.FC<GameEntryProps> = ({ gameData, username }) => {
                 <div className="flex flex-col">
                     <h2>{gameData.user_name2}</h2>
                     <EloDisplay
-                        is_draft
+                        is_draft={gameData.is_draft}
                         elo={gameData.elo_user2}
                         elo_change={gameData.elo_change2}
                     />
@@ -91,7 +91,7 @@ const GameTableElement: React.FC<GameEntryProps> = ({ gameData, username }) => {
 interface EloDisplayProps {
     elo: number;
     elo_change: number;
-    is_draft: boolean;
+    is_draft: number;
 }
 const EloDisplay: React.FC<EloDisplayProps> = ({
     elo,
