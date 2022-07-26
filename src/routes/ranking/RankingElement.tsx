@@ -2,14 +2,29 @@ import eloLogo from "../../assets/elo.svg";
 import trophy from "../../assets/trophy.svg";
 import trophy_silver from "../../assets/trophy_silver.svg";
 import trophy_bronze from "../../assets/trophy_bronze.svg";
+import { motion, Variants } from "framer-motion";
 
 interface RankingProps {
     rankingElement: RankingElementData;
 }
 
+const rankingVariants: Variants = {
+    offscreen: {
+        y: 100,
+    },
+    onscreen: {
+        y: 0,
+    },
+};
+
 const RankingElement: React.FC<RankingProps> = ({ rankingElement }) => {
     return (
-        <div className="flex flex-row rounded-xl py-2 px-4 my-3 bg-primary-bg justify-between">
+        <motion.div
+            className="flex flex-row rounded-xl py-2 px-4 my-3 bg-primary-bg justify-between"
+            initial="offscreen"
+            whileInView="onscreen"
+            variants={rankingVariants}
+        >
             <div className="flex items-center">
                 <div className="rank pr-2 text-xl">
                     {rankingElement.ranking == 1 && (
@@ -47,7 +62,7 @@ const RankingElement: React.FC<RankingProps> = ({ rankingElement }) => {
                     </span>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
