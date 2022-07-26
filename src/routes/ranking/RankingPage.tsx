@@ -16,9 +16,6 @@ const RankingPage = () => {
                         setMode(mode);
                     }}
                 />
-                <button className="button">
-                    <span>Sort by</span>
-                </button>
             </div>
 
             <RankingTable />
