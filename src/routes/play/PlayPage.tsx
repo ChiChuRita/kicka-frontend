@@ -3,10 +3,13 @@ import { useState } from "react";
 import Select, { SingleValue, StylesConfig } from "react-select";
 import { debounce } from "throttle-debounce";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { QueryClient, useQuery, useQueryClient } from "react-query";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import * as yup from "yup";
+import trophyIcon from "../../assets/trophy.svg";
+import eloLogo from "../../assets/elo.svg";
+import { ScoreInput } from "../../components/ScoreInput";
 
 interface Option {
     value: UserData;
@@ -99,12 +102,12 @@ const PlayPage = () => {
                         colors: {
                             ...theme.colors,
                             primary: "#787878",
-                            neutral0: "#404040",
+                            neutral0: "#141414",
                             neutral20: "#787878",
                             neutral80: "white",
                             neutral90: "white",
-                            primary25: "#404040",
-                            primary50: "#404040",
+                            primary25: "#141414",
+                            primary50: "#141414",
                         },
                     })}
                 />
@@ -176,51 +179,95 @@ const NewGameForm: React.FC<NewGameProps> = ({
             }}
         >
             <Form className="flex flex-col grow gap-2">
-                <div className="bg-primary-bg py-3 px-5 rounded-xl"></div>
+                <div className="bg-primary-bg py-6 px-6 rounded-xl">
+                    <div className="flex flex-row">
+                        <div className="flex flex-1 min-w-min justify-start">
+                            <div className="flex flex-col gap-1">
+                                <span className="text-2xl ">
+                                    {user1?.username}
+                                </span>
+                                <div className="flex flex-row justify-start items-center gap-3 pb-5">
+                                    <div className="flex flex-row gap-1 items-center">
+                                        <span>{user1?.elo_score}</span>
+                                        <img
+                                            src={eloLogo}
+                                            className="h-4 drop-shadow-gold"
+                                        />
+                                    </div>
+                                    <div className="bg-primary-bg h-5 w-1 rounded-xl"></div>
 
-                <div className="flex flex-row">
-                    <div className="flex flex-1 min-w-min justify-start">
-                        <div className="bg-primary-bg py-3 px-5 rounded-xl">
-                            {user1?.username}
+                                    <div className="flex flex-row gap-1 items-center">
+                                        <span>{user1?.position}.</span>
+                                        <img
+                                            src={trophyIcon}
+                                            alt="Trophy"
+                                            className="h-4 drop-shadow-gold"
+                                        />
+                                    </div>
+                                </div>
+                                <ScoreInput name="score1" />
+                            </div>
                         </div>
-                    </div>
+                        <div className="flex self-center flex-col items-center gap-2">
+                            <span className="text-2xl">VS</span>
+                            <div className="bg-primary-bg rounded-xl w-1 h-28"></div>
+                        </div>
+                        {!userSelected ? (
+                            <div className="flex flex-1 min-w-min justify-end">
+                                <div className="flex flex-col gap-1">
+                                    <span className="text-2xl text-end">
+                                        {user2?.username}
+                                    </span>
+                                    <div className="flex flex-row justify-end items-center gap-3 pb-5">
+                                        <div className="flex flex-row gap-1 items-center">
+                                            <span>{user2?.elo_score}</span>
+                                            <img
+                                                src={eloLogo}
+                                                className="h-4 drop-shadow-gold"
+                                            />
+                                        </div>
+                                        <div className="bg-primary-bg h-5 w-1 rounded-xl"></div>
 
-                    <div className="bg-primary-action py-2 px-4 rounded-xl self-center">
-                        VS
+                                        <div className="flex flex-row gap-1 items-center">
+                                            <span>{user2?.position}.</span>
+                                            <img
+                                                src={trophyIcon}
+                                                alt="Trophy"
+                                                className="h-4 drop-shadow-gold"
+                                            />
+                                        </div>
+                                    </div>
+                                    <ScoreInput name="score2" />
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex flex-1 justify-end bg-primary-bg rounded-xl ml-4 animate-pulse"></div>
+                        )}
                     </div>
+                    <div className="flex place-content-end gap-3 pt-5">
+                        <Link to="play">
+                            <button
+                                className="button bg-primary-action h-2 shadow-primary"
+                                onClick={() => console.log("clicked")}
+                            >
+                                Cancel
+                            </button>
+                        </Link>
 
-                    <div className="flex flex-1 min-w-min justify-end">
-                        <div
+                        <button
+                            disabled={userSelected}
+                            type="submit"
                             className={
-                                "bg-primary-bg py-3 px-5 rounded-xl " +
-                                (userSelected && "w-6/12")
+                                "button h-2 bg-green-500 " +
+                                (!userSelected && "shadow-secondary")
                             }
                         >
-                            {user2?.username}
-                        </div>
+                            Draft
+                        </button>
                     </div>
                 </div>
-                <div className="flex flex-row justify-between">
-                    <div className="flex flex-col w-36">
-                        <Field
-                            className="max-w-xs"
-                            name="score1"
-                            type="number"
-                        />
-                        <ErrorMessage name="score1" />
-                    </div>
-                    <div className="flex flex-col">
-                        <Field name="score2" type="number" />
-                        <ErrorMessage name="score2" />
-                    </div>
-                </div>
-                <button
-                    type="submit"
-                    className="button bg-primary-action"
-                    disabled={userSelected}
-                >
-                    Submit game
-                </button>
+                <ErrorMessage name="score1" />
+                <ErrorMessage name="score2" />
             </Form>
         </Formik>
     );

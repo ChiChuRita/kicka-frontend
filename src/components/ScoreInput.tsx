@@ -17,24 +17,25 @@ export const ScoreInput: React.FC<ScoreInputProps> = ({ name }) => {
     }, [meta.value]);
 
     return (
-        <div className="flex flex-row justify-between bg-primary-bg rounded-md">
+        <div className="flex flex-row justify-between bg-primary-bg rounded-md max-w-[180px]">
             <button
                 type="button"
-                className="text-2xl px-5 "
-                onClick={() => helpers.setValue(meta.value + 1)}
+                className="text-2xl pl-4 pr-1"
+                onClick={() => helpers.setValue(parseInt(meta.value) - 1)}
             >
-                +
+                -
             </button>
             <input
+                type="number"
                 {...field}
                 className="text-2xl text-center bg-transparent w-full"
             />
             <button
                 type="button"
-                className="text-2xl px-5 "
-                onClick={() => helpers.setValue(meta.value - 1)}
+                className="text-2xl pr-4 pl-1"
+                onClick={() => helpers.setValue(parseInt(meta.value) + 1)}
             >
-                -
+                +
             </button>
         </div>
     );
