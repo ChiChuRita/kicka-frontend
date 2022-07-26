@@ -10,7 +10,7 @@ interface RankingProps {
 
 const rankingVariants: Variants = {
     offscreen: {
-        y: 100,
+        y: 50,
     },
     onscreen: {
         y: 0,
@@ -23,6 +23,7 @@ const RankingElement: React.FC<RankingProps> = ({ rankingElement }) => {
             className="flex flex-row rounded-xl py-2 px-4 my-3 bg-primary-bg justify-between"
             initial="offscreen"
             whileInView="onscreen"
+            viewport={{ once: true }}
             variants={rankingVariants}
         >
             <div className="flex items-center">
