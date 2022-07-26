@@ -1,8 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import GameEntry from "./GameEntry";
-
-import "react-perfect-scrollbar/dist/css/styles.css";
+import GameTableElement from "./GameTableElement";
 
 interface GameTableProps {
     gamesData: GamesData;
@@ -22,7 +20,7 @@ const GameTable: React.FC<GameTableProps> = ({ gamesData, username }) => {
             </div>
             <div className="flex flex-col overflow-y-auto">
                 {gamesData.games?.map((game, index) => (
-                    <GameEntry
+                    <GameTableElement
                         key={index}
                         gameData={game}
                         username={username}

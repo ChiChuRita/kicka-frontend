@@ -13,7 +13,7 @@ interface GameEntryProps {
 }
 
 TimeAgo.addDefaultLocale(en);
-const GameEntry: React.FC<GameEntryProps> = ({ gameData, username }) => {
+const GameTableElement: React.FC<GameEntryProps> = ({ gameData, username }) => {
     const queryClient = useQueryClient();
 
     const { mutate } = useMutation(
@@ -32,7 +32,6 @@ const GameEntry: React.FC<GameEntryProps> = ({ gameData, username }) => {
 
     let isDraftByUser = gameData.is_draft && gameData.user_name1 === username;
 
-    isDraftByUser = false;
     return (
         <div className="flex flex-col gap-2 bg-primary-bg rounded-xl p-5 mb-5">
             <div className="flex flex-row justify-between">
@@ -116,4 +115,4 @@ const EloDisplay: React.FC<EloDisplayProps> = ({ elo, elo_change }) => {
     );
 };
 
-export default GameEntry;
+export default GameTableElement;
