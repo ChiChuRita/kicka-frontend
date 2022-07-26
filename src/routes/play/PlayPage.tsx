@@ -9,7 +9,7 @@ import { Formik, Field, ErrorMessage, Form } from "formik";
 import * as yup from "yup";
 
 interface Option {
-    value: string;
+    value: UserData;
     label: string;
 }
 
@@ -43,10 +43,14 @@ const PlayPage = () => {
                     noUsersFound();
                 } else {
                     setOptions(
-                        data.map((item: any) => {
+                        data.map((item) => {
                             return {
-                                value: item.username,
-                                label: item.username,
+                                value: item,
+                                label:
+                                    item.username +
+                                    " —🏆" +
+                                    item.position +
+                                    ".",
                             };
                         })
                     );
@@ -108,7 +112,7 @@ const PlayPage = () => {
 
             {ownUser && (
                 <NewGameForm
-                    user1={ownUser.data!.username}
+                    user1={ownUser.data}
                     user2={selectedOption?.value}
                     userSelected={!selectedOption}
                 ></NewGameForm>
@@ -118,8 +122,8 @@ const PlayPage = () => {
 };
 
 interface NewGameProps {
-    user1: string;
-    user2: string | undefined;
+    user1: UserData | null;
+    user2: UserData | undefined;
     userSelected: boolean;
 }
 
@@ -130,19 +134,7 @@ const NewGameForm: React.FC<NewGameProps> = ({
 }) => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    let currentDate = new Date();
-    const date =
-        currentDate.getFullYear() +
-        "/" +
-        (currentDate.getMonth() + 1) +
-        "/" +
-        currentDate.getDate() +
-        "." +
-        currentDate.getHours() +
-        ":" +
-        currentDate.getMinutes() +
-        ":" +
-        currentDate.getSeconds();
+    const currentDate = new Date().getTime().toString();
     return (
         <Formik
             initialValues={{ score1: 0, score2: 0 }}
@@ -165,9 +157,9 @@ const NewGameForm: React.FC<NewGameProps> = ({
                 setSubmitting(true);
                 try {
                     const { data } = await axios.post("/private/game/single", {
-                        user_name1: user1,
-                        user_name2: user2,
-                        time_started: date,
+                        user_name1: user1?.username,
+                        user_name2: user2?.username,
+                        time_started: currentDate,
                         score1: score1,
                         score2: score2,
                     });
@@ -184,20 +176,37 @@ const NewGameForm: React.FC<NewGameProps> = ({
             }}
         >
             <Form className="flex flex-col grow gap-2">
+                <div className="bg-neutral-800 py-3 px-5 rounded-xl"></div>
+
                 <div className="flex flex-row">
-                    <div className="flex-initial bg-neutral-800 py-4 px-6 rounded-xl justify-center">
-                        {user1}
+                    <div className="flex flex-1 min-w-min justify-start">
+                        <div className="bg-neutral-800 py-3 px-5 rounded-xl">
+                            {user1?.username}
+                        </div>
                     </div>
-                    <div className=" bg-neutral-800 py-3 px-6 rounded-xl justify-center flex-initial h-12 self-center align-middle">
+
+                    <div className="bg-primary-action py-2 px-4 rounded-xl self-center">
                         VS
                     </div>
-                    <div className="flex-initial bg-neutral-800 py-4 px-6 rounded-xl justify-center w-52">
-                        {user2}
+
+                    <div className="flex flex-1 min-w-min justify-end">
+                        <div
+                            className={
+                                "bg-neutral-800 py-3 px-5 rounded-xl " +
+                                (userSelected && "w-6/12")
+                            }
+                        >
+                            {user2?.username}
+                        </div>
                     </div>
                 </div>
-                <div className="flex flex-row justify-between max-w-0">
-                    <div className="flex flex-col max-w-xs">
-                        <Field name="score1" type="number" />
+                <div className="flex flex-row justify-between">
+                    <div className="flex flex-col w-36">
+                        <Field
+                            className="max-w-xs"
+                            name="score1"
+                            type="number"
+                        />
                         <ErrorMessage name="score1" />
                     </div>
                     <div className="flex flex-col">

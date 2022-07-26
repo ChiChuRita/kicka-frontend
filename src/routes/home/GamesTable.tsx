@@ -18,7 +18,7 @@ const GameTable: React.FC<GameTableProps> = ({ gamesData, username }) => {
                     </button>
                 </Link>
             </div>
-            <div className="flex flex-col gap-5 overflow-y-scroll">
+            <div className="flex flex-col overflow-y-scroll">
                 {gamesData.games?.map((game, index) => (
                     <GameEntry
                         key={index}
