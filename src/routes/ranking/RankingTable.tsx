@@ -78,19 +78,6 @@ const RankingTable = () => {
                 </div>
             ))}
             <div>
-                <button
-                    ref={loadMoreRef}
-                    onClick={() => fetchNextPage()}
-                    disabled={!hasNextPage || isFetchingNextPage}
-                >
-                    {isFetchingNextPage
-                        ? "Loading more..."
-                        : hasNextPage
-                        ? "Load More"
-                        : ""}
-                </button>
-            </div>
-            <div>
                 {isFetching && !isFetchingNextPage ? "Fetching..." : null}
             </div>
         </div>
