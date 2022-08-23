@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ModeSelector from "./ModeSelector";
 
+import Info from "../../components/Info";
 import RankingTable from "./RankingTable";
 
 const RankingPage = () => {
@@ -17,8 +18,13 @@ const RankingPage = () => {
                     }}
                 />
             </div>
-
-            <RankingTable />
+            {mode === "single" ? (
+                <RankingTable />
+            ) : (
+                <Info>
+                    <p>Teams are not available yet.</p>
+                </Info>
+            )}
         </div>
     );
 };

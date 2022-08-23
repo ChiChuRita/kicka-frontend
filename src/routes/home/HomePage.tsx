@@ -1,10 +1,8 @@
 import axios from "axios";
 import { useQueries } from "react-query";
-import { Link } from "react-router-dom";
 import KickaLogo from "../../components/KickaLogo";
 import trophyIcon from "../../assets/trophy.svg";
 import GameTable from "./GamesTable";
-import { ScoreInput } from "../../components/ScoreInput";
 
 const HomePage = () => {
     const query = useQueries([

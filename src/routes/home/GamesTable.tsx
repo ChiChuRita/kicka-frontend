@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import GameTableElement from "./GameTableElement";
-import Info from "./Info";
+import Info from "../../components/Info";
 
 interface GameTableProps {
     gamesData: GamesData;
@@ -20,7 +20,18 @@ const GameTable: React.FC<GameTableProps> = ({ gamesData, username }) => {
                 </Link>
             </div>
             <div className="flex flex-col overflow-y-auto">
-                {!gamesData.games && <Info />}
+                {!gamesData.games && (
+                    <Info>
+                        <p>
+                            To compete against other players, select "Create
+                            Game"! After the game, you can see your and others'
+                            achievements in the Rankings page, located at the
+                            bottom left of the screen.
+                        </p>
+                        <br />
+                        <p>Go ahead and create your first game!</p>
+                    </Info>
+                )}
                 {gamesData.games?.map((game, index) => (
                     <GameTableElement
                         key={index}
